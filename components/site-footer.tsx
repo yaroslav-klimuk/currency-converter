@@ -9,7 +9,7 @@ import { Progress } from "@/components/ui/progress"
 import VercelLogo from "@/components/vercel-logo"
 
 export function SiteFooter() {
-  const { theme } = useTheme()
+  const { resolvedTheme } = useTheme()
   const quota = 80
   const indicatorColor =
     quota > 60 ? "bg-green-300" : quota > 20 ? "bg-orange-300" : "bg-red-400"
@@ -26,7 +26,6 @@ export function SiteFooter() {
             />
           </div>
         </div>
-
         <div className="order-2 flex flex-1 items-center justify-center">
           <Link
             href="https://www.vercel.com"
@@ -47,7 +46,7 @@ export function SiteFooter() {
                 variant: "link",
               })}
             >
-              shadcn/ui {theme === "dark" ? "🤍" : "🖤"}
+              shadcn/ui {resolvedTheme === "dark" ? "🤍" : "🖤"}
             </div>
           </Link>
         </div>
