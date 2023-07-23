@@ -5,29 +5,28 @@ import { useTheme } from "next-themes"
 
 import { siteConfig } from "@/config/site"
 import { buttonVariants } from "@/components/ui/button"
-import { Progress } from "@/components/ui/progress"
+import { Indicator, IndicatorState } from "@/components/ui/indicator"
 import { useQuota } from "@/components/quota-provider"
 import VercelLogo from "@/components/vercel-logo"
 
 export function SiteFooter() {
   const { resolvedTheme } = useTheme()
   const { quota } = useQuota()
-  const indicatorColor =
-    quota > 60 ? "bg-green-300" : quota > 20 ? "bg-orange-300" : "bg-red-400"
+
+  const indicatorState: IndicatorState =
+    quota >= 50
+      ? "success"
+      : quota > 20
+      ? "warning"
+      : quota > 0
+      ? "error"
+      : "default"
 
   return (
     <footer className="bottom-0 w-full border-t bg-background">
       <div className="container flex h-20 flex-col py-2 md:flex-row">
         <div className="order-3 flex flex-1 items-center justify-center md:order-1 md:justify-start">
-          <div className="flex items-baseline">
-            <span className="pr-1 text-sm">Quota: </span>
-            <Progress
-              value={quota}
-              className=" h-2 w-12 border"
-              indicatorClassName={indicatorColor}
-              aria-label="Quota progress bar"
-            />
-          </div>
+          <Indicator state={indicatorState}>Quota: {quota}%</Indicator>
         </div>
         <div className="order-2 flex flex-1 items-center justify-center">
           <Link
