@@ -6,13 +6,15 @@ import { useTheme } from "next-themes"
 import { siteConfig } from "@/config/site"
 import { buttonVariants } from "@/components/ui/button"
 import { Progress } from "@/components/ui/progress"
+import { useQuota } from "@/components/quota-provider"
 import VercelLogo from "@/components/vercel-logo"
 
 export function SiteFooter() {
   const { resolvedTheme } = useTheme()
-  const quota = 80
+  const { quota } = useQuota()
   const indicatorColor =
     quota > 60 ? "bg-green-300" : quota > 20 ? "bg-orange-300" : "bg-red-400"
+
   return (
     <footer className="bottom-0 w-full border-t bg-background">
       <div className="container flex h-20 flex-col py-2 md:flex-row">
@@ -23,6 +25,7 @@ export function SiteFooter() {
               value={quota}
               className=" h-2 w-12 border"
               indicatorClassName={indicatorColor}
+              aria-label="Quota progress bar"
             />
           </div>
         </div>

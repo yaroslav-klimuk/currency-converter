@@ -2,5 +2,13 @@
   "USD": "US",
   "EUR": "EU",
   "PLN": "PL",
-  "BYN": "BY"
+  "BYN": "BY",
+  "CZK": "CZ",
+  "GBP": "GB",
+  "AED": "AE",
+  "CNY": "CN",
+  "EGP": "EG",
+  "HKD": "HK",
+  "JPY": "JP",
+  "RUB": "RU"
 }

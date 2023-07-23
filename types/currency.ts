@@ -13,4 +13,5 @@ export type RatesResponse = {
       value: number
     }
   }
+  remainingQuota: number
 }
