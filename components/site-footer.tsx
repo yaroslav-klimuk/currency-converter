@@ -26,7 +26,7 @@ export function SiteFooter() {
     <footer className="bottom-0 w-full border-t bg-background">
       <div className="container flex h-20 flex-col py-2 md:flex-row">
         <div className="order-3 flex flex-1 items-center justify-center md:order-1 md:justify-start">
-          <Indicator state={indicatorState}>Quota: {quota}%</Indicator>
+          <Indicator state={indicatorState}>Quota: {quota.toFixed()}%</Indicator>
         </div>
         <div className="order-2 flex flex-1 items-center justify-center">
           <Link

@@ -32,8 +32,13 @@ export const metadata: Metadata = {
       {
         rel: "mask-icon",
         url: "/icons/safari-pinned-tab.svg",
+        // @ts-ignore
+        color: "#fff",
       },
     ],
+  },
+  appleWebApp: {
+    title: siteConfig.shortName,
   },
   manifest: "/manifest.json",
 }

@@ -1,8 +1,9 @@
 import { RatesResponse } from "@/types/currency"
 
 export const fetchRates = async (): Promise<RatesResponse> => {
+  // TODO refactor qurey params
   const response = await fetch(
-    "https://api.currencyapi.com/v3/latest?currencies=USD,EUR,PLN,BYN,CZK",
+    "https://api.currencyapi.com/v3/latest?currencies=USD,EUR,PLN,BYN,CZK,GBP,AED,EGP,RUB,SEK,NOK,DKK,UAH,CHF",
     {
       headers: {
         apiKey: process.env.CURRENCY_API_KEY!,

@@ -16,12 +16,14 @@ const defaultCurrecnies: CurrencyCode[] = ["USD", "EUR", "PLN", "BYN"]
 
 export default function ConverterPage({
   rates,
-  remaningQuota ,
+  remaningQuota,
 }: ConverterPageProps) {
   const [currencies, setCurrnecies] =
     useState<CurrencyCode[]>(defaultCurrecnies)
   const { setQuota } = useQuota()
-  const availableCurrencies = rates ? Object.keys(rates) as CurrencyCode[] : []
+  const availableCurrencies = rates
+    ? (Object.keys(rates) as CurrencyCode[])
+    : []
 
   useEffect(() => {
     setQuota(remaningQuota)

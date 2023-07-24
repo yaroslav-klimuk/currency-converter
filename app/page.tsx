@@ -7,7 +7,7 @@ export default async function IndexPage() {
 
   const normalizedRates = Object.values(ratesResponse.rates).reduce(
     (acc, { code, value }) => {
-      return { ...acc, [code]: value }
+      return { ...acc, [code]: value.toFixed(2) }
     },
     {} as Rate
   )

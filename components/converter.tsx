@@ -1,28 +1,21 @@
-"use client";
+"use client"
 
-import { useEffect, useState } from "react";
-import countriesCodes from "@/helpers/countriesCodes.json";
-import { AnimatePresence } from "framer-motion";
+import { useEffect, useState } from "react"
+import countriesCodes from "@/helpers/countriesCodes.json"
+import { AnimatePresence } from "framer-motion"
 
-
-
-import { CurrencyCode, Rate } from "@/types/currency";
-import { AnimatedListItem } from "@/components/ui/animated-list-item";
-import { CurrencyInput } from "@/components/ui/currency-input";
-import { MotionButton } from "@/components/ui/motion-button";
-import CurrenciesList from "@/components/currencies-list";
-import { Icons } from "@/components/icons";
-
-
-
-
+import { CurrencyCode, Rate } from "@/types/currency"
+import { AnimatedListItem } from "@/components/ui/animated-list-item"
+import { CurrencyInput } from "@/components/ui/currency-input"
+import { MotionButton } from "@/components/ui/motion-button"
+import CurrenciesList from "@/components/currencies-list"
+import { Icons } from "@/components/icons"
 
 interface ConverterProps {
   rates: Rate
   availableCurrencies: CurrencyCode[]
   selectedCurrecnies: CurrencyCode[]
   setCurrency: (currency: CurrencyCode) => void
-  className?: string
 }
 
 export default function Converter({
@@ -30,7 +23,6 @@ export default function Converter({
   availableCurrencies,
   selectedCurrecnies,
   setCurrency,
-  className,
 }: ConverterProps) {
   const [state, setState] = useState<Rate>({} as Rate)
 

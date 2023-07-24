@@ -8,7 +8,12 @@
   "AED": "AE",
   "CNY": "CN",
   "EGP": "EG",
-  "HKD": "HK",
   "JPY": "JP",
-  "RUB": "RU"
+  "RUB": "RU",
+  "UAH": "UA",
+  "TRK": "TR",
+  "SEK": "SE",
+  "NOK": "NO",
+  "DKK": "DK",
+  "CHF": "CH"
 }
