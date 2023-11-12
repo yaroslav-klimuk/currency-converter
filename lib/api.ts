@@ -24,7 +24,7 @@ export const fetchRates = async (): Promise<RatesData> => {
 
   const quota = response.headers.get("x-ratelimit-limit-quota-month")
   const remaining = response.headers.get("x-ratelimit-remaining-quota-month")
-    await new Promise((resolve) => setTimeout(resolve, 3000))
+
   return {
     rates: normalizedRates,
     remainingQuota: (Number(remaining) / Number(quota)) * 100,
