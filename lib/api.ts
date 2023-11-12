@@ -1,22 +1,32 @@
-import { RatesResponse } from "@/types/currency"
+import countriesCodes from "@/helpers/countriesCodes.json"
 
-export const fetchRates = async (): Promise<RatesResponse> => {
-  // TODO refactor qurey params
+import { Rate, RatesData, RatesResponse } from "@/types/currency"
+
+export const fetchRates = async (): Promise<RatesData> => {
+  const currencies = Object.keys(countriesCodes).join(",")
   const response = await fetch(
-    "https://api.currencyapi.com/v3/latest?currencies=USD,EUR,PLN,BYN,CZK,GBP,AED,EGP,RUB,SEK,NOK,DKK,UAH,CHF",
+    `https://api.currencyapi.com/v3/latest?currencies=${currencies}`,
     {
       headers: {
         apiKey: process.env.CURRENCY_API_KEY!,
       },
     }
   )
-  const { data } = await response.json()
 
-  const quota = response.headers.get("x-ratelimit-limit-monthly-month")
+  const { data } = (await response.json()) as RatesResponse
+
+  const normalizedRates = Object.values(data || {}).reduce(
+    (acc, { code, value }) => {
+      return { ...acc, [code]: value.toFixed(2) }
+    },
+    {} as Rate
+  )
+
+  const quota = response.headers.get("x-ratelimit-limit-quota-month")
   const remaining = response.headers.get("x-ratelimit-remaining-quota-month")
-  console.log("remaining: ", remaining)
+    await new Promise((resolve) => setTimeout(resolve, 3000))
   return {
-    rates: data,
+    rates: normalizedRates,
     remainingQuota: (Number(remaining) / Number(quota)) * 100,
   }
 }

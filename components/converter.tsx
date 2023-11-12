@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import countriesCodes from "@/helpers/countriesCodes.json"
-import { AnimatePresence } from "framer-motion"
+import { AnimatePresence, motion } from "framer-motion"
 
 import { CurrencyCode, Rate } from "@/types/currency"
 import { AnimatedListItem } from "@/components/ui/animated-list-item"
@@ -13,18 +13,18 @@ import { Icons } from "@/components/icons"
 
 interface ConverterProps {
   rates: Rate
-  availableCurrencies: CurrencyCode[]
-  selectedCurrecnies: CurrencyCode[]
-  setCurrency: (currency: CurrencyCode) => void
 }
 
-export default function Converter({
-  rates,
-  availableCurrencies,
-  selectedCurrecnies,
-  setCurrency,
-}: ConverterProps) {
+const defaultCurrecnies: CurrencyCode[] = ["USD", "EUR", "PLN", "BYN"]
+
+export default function Converter({ rates }: ConverterProps) {
   const [state, setState] = useState<Rate>({} as Rate)
+  const [currencies, setCurrnecies] =
+    useState<CurrencyCode[]>(defaultCurrecnies)
+
+  const availableCurrencies = rates
+    ? (Object.keys(rates) as CurrencyCode[])
+    : []
 
   useEffect(() => {
     setState(rates)
@@ -46,33 +46,48 @@ export default function Converter({
     setState((prev) => ({ ...prev, ...convertedCurrencies }))
   }
 
+  const currencyChangeHandler = (currency: CurrencyCode) => {
+    setCurrnecies((prev) => {
+      const index = prev.indexOf(currency)
+      if (index === -1) {
+        return [...prev, currency]
+      }
+      if (currencies.length < 3) {
+        return prev
+      }
+      return prev.filter((item) => item !== currency)
+    })
+  }
+
   return (
     <>
-      <AnimatePresence initial={false} mode="popLayout">
-        {selectedCurrecnies.map((currencyCode) => (
-          <AnimatedListItem key={currencyCode}>
-            <CurrencyInput
-              size={20}
-              countryCode={countriesCodes[currencyCode]}
-              value={state[currencyCode] || ""}
-              aria-label={`${currencyCode} currency input`}
-              onChange={(event) =>
-                convertCurrencies(currencyCode, event.target.value)
-              }
-            />
-          </AnimatedListItem>
-        ))}
-      </AnimatePresence>
+      <motion.div layout className={"relative flex flex-col gap-4"}>
+        <AnimatePresence initial={false} mode="popLayout">
+          {currencies.map((currencyCode) => (
+            <AnimatedListItem key={currencyCode}>
+              <CurrencyInput
+                size={20}
+                countryCode={countriesCodes[currencyCode]}
+                value={state[currencyCode] || ""}
+                aria-label={`${currencyCode} currency input`}
+                onChange={(event) =>
+                  convertCurrencies(currencyCode, event.target.value)
+                }
+              />
+            </AnimatedListItem>
+          ))}
+        </AnimatePresence>
 
-      <CurrenciesList
-        currencies={availableCurrencies}
-        selectedCurrencies={selectedCurrecnies}
-        onSelectCurrency={setCurrency}
-      >
-        <MotionButton layout variant="outline" aria-label="add currency">
-          <Icons.plus size={18} />
-        </MotionButton>
-      </CurrenciesList>
+        <CurrenciesList
+          currencies={availableCurrencies}
+          selectedCurrencies={currencies}
+          onSelectCurrency={currencyChangeHandler}
+        >
+          <MotionButton layout variant="outline" aria-label="add currency">
+            <Icons.plus size={18} />
+          </MotionButton>
+        </CurrenciesList>
+      </motion.div>
     </>
   )
 }

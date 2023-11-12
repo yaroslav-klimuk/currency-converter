@@ -1,21 +1,13 @@
-import { Rate } from "@/types/currency"
-import { fetchRates } from "@/lib/api"
-import ConverterPage from "@/app/converter/page"
+import Converter from "./components/converter"
 
 export default async function IndexPage() {
-  const ratesResponse = await fetchRates()
-
-  const normalizedRates = Object.values(ratesResponse.rates).reduce(
-    (acc, { code, value }) => {
-      return { ...acc, [code]: value.toFixed(2) }
-    },
-    {} as Rate
-  )
-
   return (
-    <ConverterPage
-      rates={normalizedRates}
-      remaningQuota={ratesResponse.remainingQuota}
-    />
+    <section className="container flex flex-col items-center justify-center gap-6 pb-8 pt-6 md:py-10">
+      <h1 className="text-3xl font-extrabold leading-tight tracking-tighter md:text-4xl">
+        Currency Converter
+      </h1>
+
+      <Converter />
+    </section>
   )
 }
