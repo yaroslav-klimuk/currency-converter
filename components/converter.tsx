@@ -61,7 +61,6 @@ export default function Converter({ rates }: ConverterProps) {
 
   return (
     <>
-      <motion.div layout className={"relative flex flex-col gap-4"}>
         <AnimatePresence initial={false} mode="popLayout">
           {currencies.map((currencyCode) => (
             <AnimatedListItem key={currencyCode}>
@@ -87,7 +86,6 @@ export default function Converter({ rates }: ConverterProps) {
             <Icons.plus size={18} />
           </MotionButton>
         </CurrenciesList>
-      </motion.div>
     </>
   )
 }
