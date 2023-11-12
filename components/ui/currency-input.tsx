@@ -18,7 +18,7 @@ const CurrencyInput = React.forwardRef<HTMLInputElement, CurrencyInputProps>(
       <div className={cn("relative flex items-center", containerClassName)}>
         <Flag
           countryCode={countryCode}
-          className={cn("absolute left-2 h-5 w-5", flagClassName)}
+          className={cn("absolute left-2", flagClassName)}
           size={size}
         />
         <Input
