@@ -34,10 +34,9 @@ export default function CurrenciesList({
           >
             <Flag
               countryCode={countriesCodes[currency]}
-              size={20}
               className="absolute"
             />
-            <span className="ml-10">{currency}</span>
+            <span className="ml-10 text-base">{currency}</span>
           </DropdownMenuCheckboxItem>
         ))}
       </DropdownMenuContent>

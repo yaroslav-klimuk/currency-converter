@@ -11,7 +11,7 @@ export interface FlagProps {
   className?: string
 }
 
-export function Flag({ countryCode, size, className }: FlagProps) {
+export function Flag({ countryCode, size = 22, className }: FlagProps) {
   const [isLoaded, setIsLoaded] = useState<boolean>(false)
 
   return (
@@ -19,16 +19,16 @@ export function Flag({ countryCode, size, className }: FlagProps) {
       {!isLoaded && (
         <Skeleton
           circle
-          width={size ? `${size}px` : "24px"}
-          height={size ? `${size}px` : "24px"}
+          width={`${size}px`}
+          height={`${size}px`}
           containerClassName={cn("flex items-center")}
         />
       )}
       <Image
         src={`https://flagicons.lipis.dev/flags/1x1/${countryCode.toLowerCase()}.svg`}
         alt={countryCode}
-        width={size ? size : 24}
-        height={size ? size : 24}
+        width={size}
+        height={size}
         className={`rounded-full border ${isLoaded ? "opacity-100" : "opacity-0"}`}
         onLoadingComplete={() => setIsLoaded(true)}
       />

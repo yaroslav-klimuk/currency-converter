@@ -7,23 +7,26 @@ import { Input } from "@/components/ui/input"
 export interface CurrencyInputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
   countryCode: string
-  size?: number
+  flagSize?: number
   containerClassName?: string
   flagClassName?: string
 }
 
 const CurrencyInput = React.forwardRef<HTMLInputElement, CurrencyInputProps>(
-  ({ countryCode, size, containerClassName, flagClassName, ...props }, ref) => {
+  (
+    { countryCode, flagSize, containerClassName, flagClassName, ...props },
+    ref
+  ) => {
     return (
       <div className={cn("relative flex items-center", containerClassName)}>
         <Flag
           countryCode={countryCode}
           className={cn("absolute left-2", flagClassName)}
-          size={size}
+          size={flagSize}
         />
         <Input
           ref={ref}
-          className="pl-10"
+          className="h-12 pl-10 text-base"
           type="number"
           inputMode="numeric"
           {...props}
