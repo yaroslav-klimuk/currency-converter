@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import { useTheme } from "next-themes"
+import { useIsClient } from "usehooks-ts"
 
 import { siteConfig } from "@/config/site"
 import { buttonVariants } from "@/components/ui/button"
@@ -9,12 +10,12 @@ import VercelLogo from "@/components/vercel-logo"
 
 export function SiteFooter() {
   const { resolvedTheme } = useTheme()
+  const isClient = useIsClient()
 
   return (
     <footer className="bottom-0 w-full border-t bg-background">
       <div className="container flex h-20 flex-col py-2 md:flex-row">
-        <div className="order-3 flex flex-1 items-center justify-center md:order-1 md:justify-start">
-        </div>
+        <div className="order-3 flex flex-1 items-center justify-center md:order-1 md:justify-start"></div>
         <div className="order-2 flex flex-1 items-center justify-center">
           <Link
             href="https://www.vercel.com"
@@ -35,7 +36,7 @@ export function SiteFooter() {
                 variant: "link",
               })}
             >
-              shadcn/ui {resolvedTheme === "dark" ? "🤍" : "🖤"}
+              shadcn/ui {isClient && resolvedTheme === "dark" ? "🤍" : "🖤"}
             </div>
           </Link>
         </div>
