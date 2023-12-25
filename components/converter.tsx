@@ -7,7 +7,6 @@ import Skeleton from "react-loading-skeleton"
 import { useIsClient, useLocalStorage } from "usehooks-ts"
 
 import "react-loading-skeleton/dist/skeleton.css"
-
 import { CurrencyCode, Rate } from "@/types/currency"
 import { AnimatedListItem } from "@/components/ui/animated-list-item"
 import { CurrencyInput } from "@/components/ui/currency-input"
