@@ -1,9 +1,9 @@
 name: Code check
-on: [push, pull_request]
+on: [push, pull_request, workflow_dispatch]
 jobs:
   lint:
     runs-on: ubuntu-latest
-    name: yarn lint
+    name: ESLint
     steps:
       - uses: actions/checkout@v3
         with:
@@ -19,3 +19,23 @@ jobs:
 
       - name: Run ESLint
         run: yarn lint
+  tsc:
+    runs-on: ubuntu-latest
+    name: tsc
+    needs: lint
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+  
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install Dependencies
+        run: yarn install
+
+      - name: Run TypeScript Compiler
+        run: yarn tsc --noEmit
+      
