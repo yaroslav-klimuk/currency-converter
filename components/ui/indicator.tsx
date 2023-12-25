@@ -10,7 +10,7 @@ export interface IndicatorProps {
 }
 
 export function Indicator({
-  state = 'default',
+  state = "default",
   indicatorColors,
   children,
 }: PropsWithChildren<IndicatorProps>) {

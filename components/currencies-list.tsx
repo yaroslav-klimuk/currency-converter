@@ -32,10 +32,7 @@ export default function CurrenciesList({
             checked={selectedCurrencies.includes(currency)}
             onCheckedChange={() => onSelectCurrency(currency)}
           >
-            <Flag
-              countryCode={countriesCodes[currency]}
-              className="absolute"
-            />
+            <Flag countryCode={countriesCodes[currency]} className="absolute" />
             <span className="ml-10 text-base">{currency}</span>
           </DropdownMenuCheckboxItem>
         ))}

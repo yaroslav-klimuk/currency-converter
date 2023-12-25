@@ -1,6 +1,7 @@
-import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
+import { motion } from "framer-motion"
 
-const MotionButton = motion(Button);
+import { Button } from "@/components/ui/button"
+
+const MotionButton = motion(Button)
 
 export { MotionButton }
