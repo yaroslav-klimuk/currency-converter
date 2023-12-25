@@ -9,8 +9,8 @@ export default async function ConverterWidget() {
 
   return (
     <SkeletonTheme
-      baseColor="hsl(var(--muted))"
-      highlightColor="hsl(210 50% 99%)"
+      baseColor="hsl(var(--skeleton-bg))"
+      highlightColor="hsl(var(--skeleton-highlight))"
     >
       <MotionDiv layout className={"relative flex flex-col gap-4"}>
         <Converter rates={rates} />
