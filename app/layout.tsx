@@ -1,8 +1,10 @@
 import "@/styles/globals.css"
+
 import { Metadata } from "next"
+import { GeistMono } from "geist/font/mono"
+import { GeistSans } from "geist/font/sans"
 
 import { siteConfig } from "@/config/site"
-import { fontSans } from "@/lib/fonts"
 import { cn } from "@/lib/utils"
 import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
@@ -53,8 +55,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <head />
         <body
           className={cn(
-            "min-h-screen bg-background font-sans antialiased",
-            fontSans.variable
+            "bg-background min-h-screen font-sans antialiased",
+            GeistSans.variable,
+            GeistMono.variable
           )}
         >
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
