@@ -19,11 +19,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+        with:
+          fetch-depth: 0
+
+      - name: "Install Node.js"
+        uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: yarn
-      - run: yarn install --immutable
-      - run: yarn vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
-      - run: yarn vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
-      - run: yarn vercel deploy --prod --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
+          cache: pnpm
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2.4.0
+        with:
+          version: 8.14.3
+          run_install: false
+
+      - run: pnpm install
+      - run: pnpm vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+      - run: pnpm vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+      - run: pnpm vercel deploy --prod --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
