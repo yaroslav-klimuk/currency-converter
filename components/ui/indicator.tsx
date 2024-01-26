@@ -25,7 +25,7 @@ export function Indicator({
 
   return (
     <div className="flex items-center">
-      <div className={`mr-2 h-2.5 w-2.5 rounded-full ${color}`} />
+      <div className={`mr-2 size-2.5 rounded-full ${color}`} />
       {children && <span className="pr-1 text-sm font-medium">{children}</span>}
     </div>
   )

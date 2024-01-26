@@ -13,7 +13,7 @@ export function SiteFooter() {
   const isClient = useIsClient()
 
   return (
-    <footer className="bottom-0 w-full border-t bg-background">
+    <footer className="bg-background bottom-0 w-full border-t">
       <div className="container flex h-20 flex-col py-2 md:flex-row">
         <div className="order-3 flex flex-1 items-center justify-center md:order-1 md:justify-start"></div>
         <div className="order-2 flex flex-1 items-center justify-center">
