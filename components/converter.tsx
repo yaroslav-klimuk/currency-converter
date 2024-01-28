@@ -67,13 +67,7 @@ export default function Converter({ rates, className }: ConverterProps) {
 
   if (!isClient) {
     return (
-      <motion.div
-        layout
-        className={cn(
-          "relative flex flex-col rounded-lg border px-10 pb-14 pt-8 shadow-sm",
-          className
-        )}
-      >
+      <motion.div layout className={cn("flex flex-col", className)}>
         <Skeleton
           containerClassName="flex flex-col"
           className="mb-4"
@@ -87,13 +81,7 @@ export default function Converter({ rates, className }: ConverterProps) {
   }
 
   return (
-    <motion.div
-      layout
-      className={cn(
-        "relative flex flex-col rounded-lg border px-10 pb-14 pt-8 shadow-sm",
-        className
-      )}
-    >
+    <motion.div layout className={cn("flex flex-col", className)}>
       <AnimatePresence initial={false} mode="popLayout">
         {currencies.map((currencyCode) => (
           <AnimatedListItem key={currencyCode}>

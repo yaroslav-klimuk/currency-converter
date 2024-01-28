@@ -1,4 +1,12 @@
-import Converter from "./components/converter"
+import Converter from "@/app/components/converter"
+
+// TODO switch flags
+// TODO remove twitter icon
+// TODO replace github icon
+// TODO make inputs draggable
+// TODO long tab for delete (dropdown?)
+// TODO redesign converter (widget)
+// TODO add offilne mode
 
 export default async function IndexPage() {
   return (
