@@ -2,13 +2,12 @@
 
 import { useEffect, useState } from "react"
 import countriesCodes from "@/helpers/countriesCodes.json"
-import { AnimatePresence } from "framer-motion"
+import { AnimatePresence, motion } from "framer-motion"
 import Skeleton from "react-loading-skeleton"
 import { useIsClient, useLocalStorage } from "usehooks-ts"
 
-import "react-loading-skeleton/dist/skeleton.css"
-
 import { CurrencyCode, Rate } from "@/types/currency"
+import { cn } from "@/lib/utils"
 import { AnimatedListItem } from "@/components/ui/animated-list-item"
 import { CurrencyInput } from "@/components/ui/currency-input"
 import { MotionButton } from "@/components/ui/motion-button"
@@ -17,18 +16,18 @@ import { Icons } from "@/components/icons"
 
 interface ConverterProps {
   rates: Rate
+  className?: string
 }
 
 const defaultCurrecnies: CurrencyCode[] = ["USD", "EUR", "PLN", "BYN"]
 
-export default function Converter({ rates }: ConverterProps) {
+export default function Converter({ rates, className }: ConverterProps) {
   const isClient = useIsClient()
   const [state, setState] = useState<Rate>({} as Rate)
   const [currencies, setCurrnecies] = useLocalStorage<CurrencyCode[]>(
     "currencies",
     defaultCurrecnies
   )
-
   const availableCurrencies = rates
     ? (Object.keys(rates) as CurrencyCode[])
     : []
@@ -68,24 +67,41 @@ export default function Converter({ rates }: ConverterProps) {
 
   if (!isClient) {
     return (
-      <Skeleton
-        containerClassName="flex flex-col gap-4"
-        width={230}
-        height={48}
-        count={5}
-        inline
-      />
+      <motion.div
+        layout
+        className={cn(
+          "relative flex flex-col rounded-lg border px-10 pb-14 pt-8 shadow-sm",
+          className
+        )}
+      >
+        <Skeleton
+          containerClassName="flex flex-col"
+          className="mb-4"
+          width={253}
+          height={56}
+          count={5}
+          inline
+        />
+      </motion.div>
     )
   }
 
   return (
-    <>
+    <motion.div
+      layout
+      className={cn(
+        "relative flex flex-col rounded-lg border px-10 pb-14 pt-8 shadow-sm",
+        className
+      )}
+    >
       <AnimatePresence initial={false} mode="popLayout">
         {currencies.map((currencyCode) => (
           <AnimatedListItem key={currencyCode}>
             <CurrencyInput
               countryCode={countriesCodes[currencyCode]}
               value={state[currencyCode] || ""}
+              containerClassName="mb-4"
+              flagSize={26}
               aria-label={`${currencyCode} currency input`}
               onChange={(event) =>
                 convertCurrencies(currencyCode, event.target.value)
@@ -100,10 +116,15 @@ export default function Converter({ rates }: ConverterProps) {
         selectedCurrencies={currencies}
         onSelectCurrency={currencyChangeHandler}
       >
-        <MotionButton layout variant="outline" aria-label="add currency">
+        <MotionButton
+          layout
+          variant="outline"
+          size="lg"
+          aria-label="add currency"
+        >
           <Icons.plus size={18} />
         </MotionButton>
       </CurrenciesList>
-    </>
+    </motion.div>
   )
 }

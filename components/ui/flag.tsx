@@ -26,10 +26,15 @@ export function Flag({ countryCode, size = 22, className }: FlagProps) {
         />
       )}
       <Image
-        src={`https://flagicons.lipis.dev/flags/1x1/${countryCode.toLowerCase()}.svg`}
+        // src={`https://flagicons.lipis.dev/flags/1x1/${countryCode.toLowerCase()}.svg`}
+        src={`https://hatscripts.github.io/circle-flags/flags/${countryCode.toLowerCase()}.svg`}
         alt={countryCode}
         width={size}
         height={size}
+        style={{
+          width: `${size}px`,
+          height: `${size}px`,
+        }}
         className={`rounded-full border ${
           isLoaded ? "opacity-100" : "opacity-0"
         }`}

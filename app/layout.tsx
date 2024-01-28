@@ -3,6 +3,9 @@ import "@/styles/globals.css"
 import { Metadata } from "next"
 import { GeistMono } from "geist/font/mono"
 import { GeistSans } from "geist/font/sans"
+import { SkeletonTheme } from "react-loading-skeleton"
+
+import "react-loading-skeleton/dist/skeleton.css"
 
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
@@ -55,18 +58,23 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <head />
         <body
           className={cn(
-            "bg-background min-h-screen font-sans antialiased",
+            "bg-background min-h-screen font-sans antialiased transition-colors duration-300",
             GeistSans.variable,
             GeistMono.variable
           )}
         >
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            <div className="relative flex min-h-screen flex-col">
-              <SiteHeader />
-              <div className="flex-1">{children}</div>
-              <SiteFooter />
-            </div>
-            <TailwindIndicator />
+            <SkeletonTheme
+              baseColor="hsl(var(--skeleton-bg))"
+              highlightColor="hsl(var(--skeleton-highlight))"
+            >
+              <div className="relative flex min-h-screen flex-col">
+                <SiteHeader />
+                <div className="flex-1">{children}</div>
+                <SiteFooter />
+              </div>
+              <TailwindIndicator />
+            </SkeletonTheme>
           </ThemeProvider>
         </body>
       </html>

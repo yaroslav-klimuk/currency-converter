@@ -1,36 +1,39 @@
-import { forwardRef, PropsWithChildren } from "react"
-import { motion } from "framer-motion"
+import { FC } from "react"
+import { HTMLMotionProps, motion } from "framer-motion"
 
-const AnimatedListItem = forwardRef<HTMLDivElement, PropsWithChildren<{}>>(
-  ({ children }, ref) => {
-    return (
-      <motion.div
-        layout
-        ref={ref}
-        initial={{ height: 0, opacity: 0 }}
-        animate={{
-          height: "auto",
-          opacity: 1,
-          transition: {
-            type: "spring",
-            bounce: 0,
-            duration: 0.25,
-            opacity: { delay: 0.05 },
-          },
-        }}
-        exit={{ height: 0, opacity: 0 }}
-        transition={{
+interface Props extends HTMLMotionProps<"div"> {}
+
+const AnimatedListItem: FC<Props> = ({ children, ...props }) => {
+  return (
+    <motion.div
+      layout
+      initial={{ height: 0, opacity: 0 }}
+      animate={{
+        height: "auto",
+        opacity: 1,
+        transition: {
           type: "spring",
           bounce: 0,
-          duration: 0.6,
-          opacity: { duration: 0.12 },
-        }}
-      >
-        {children}
-      </motion.div>
-    )
-  }
-)
+          duration: 0.4,
+          opacity: { delay: 0.1 },
+        },
+      }}
+      exit={{
+        height: 0,
+        opacity: 0,
+        transition: {
+          type: "spring",
+          bounce: 0,
+          duration: 0.5,
+          opacity: { duration: 0.15 },
+        },
+      }}
+      {...props}
+    >
+      {children}
+    </motion.div>
+  )
+}
 
 AnimatedListItem.displayName = "AnimatedCurrencyInput"
 
