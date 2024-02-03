@@ -1,10 +1,10 @@
-import countriesCodes from "@/helpers/countriesCodes.json"
+import currencies from "@/helpers/currencies"
 
-export type CurrencyCode = keyof typeof countriesCodes
+export type Currency = (typeof currencies)[number]
+export type CurrencyCode = (typeof currencies)[number]["currencyCode"]
+export type CountryCode = (typeof currencies)[number]["countryCode"]
 
-export type Rate = {
-  [key in CurrencyCode]: number
-}
+export type Rate = Record<CurrencyCode, number>
 
 export type RatesData = {
   rates: Rate
@@ -13,7 +13,7 @@ export type RatesData = {
 
 export type RatesResponse = {
   data: {
-    [keyof in CurrencyCode]: {
+    [key in CurrencyCode]: {
       code: CurrencyCode
       value: number
     }

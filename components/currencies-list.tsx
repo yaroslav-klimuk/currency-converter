@@ -1,7 +1,6 @@
 import { PropsWithChildren } from "react"
-import countriesCodes from "@/helpers/countriesCodes.json"
 
-import { CurrencyCode } from "@/types/currency"
+import { Currency, CurrencyCode } from "@/types/currency"
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -11,9 +10,9 @@ import {
 import { Flag } from "@/components/ui/flag"
 
 interface CurrenciesListProps {
-  currencies: CurrencyCode[]
-  selectedCurrencies: CurrencyCode[]
-  onSelectCurrency: (currency: CurrencyCode) => void
+  currencies: readonly Currency[]
+  selectedCurrencies: Currency[]
+  onSelectCurrency: (currencyCode: CurrencyCode) => void
 }
 
 export default function CurrenciesList({
@@ -22,18 +21,39 @@ export default function CurrenciesList({
   onSelectCurrency,
   children,
 }: PropsWithChildren<CurrenciesListProps>) {
+  const sortedCurrencies = [...currencies].sort((a, b) => {
+    if (a.countryCode < b.currencyCode) {
+      return -1
+    }
+    if (a.currencyCode > b.currencyCode) {
+      return 1
+    }
+    return 0
+  })
+
+  const isCurrencySelected = (currencyCode: CurrencyCode) => {
+    return !!selectedCurrencies.find((c) => c.currencyCode === currencyCode)
+  }
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>{children}</DropdownMenuTrigger>
       <DropdownMenuContent className="max-h-[30vh] w-[--radix-dropdown-menu-trigger-width] overflow-y-auto">
-        {currencies.sort().map((currency) => (
+        {sortedCurrencies.map((currency) => (
           <DropdownMenuCheckboxItem
-            key={`${currency}-list-item`}
-            checked={selectedCurrencies.includes(currency)}
-            onCheckedChange={() => onSelectCurrency(currency)}
+            key={`${currency.currencyCode}-list-item`}
+            checked={isCurrencySelected(currency.currencyCode)}
+            onCheckedChange={() => onSelectCurrency(currency.currencyCode)}
           >
-            <Flag countryCode={countriesCodes[currency]} className="absolute" />
-            <span className="ml-10 text-base">{currency}</span>
+            <div className="flex items-center">
+              <Flag countryCode={currency.countryCode} size={28} />
+              <div className="ml-2 flex flex-col justify-center">
+                <span className="text-base ">{currency.currencyName}</span>
+                <span className="text-ring text-sm ">
+                  {currency.currencyCode}
+                </span>
+              </div>
+            </div>
           </DropdownMenuCheckboxItem>
         ))}
       </DropdownMenuContent>

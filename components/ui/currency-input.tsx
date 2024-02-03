@@ -1,40 +1,83 @@
 import * as React from "react"
+import { ChangeEventHandler, FC, FocusEventHandler, useRef } from "react"
 
+import { Currency } from "@/types/currency"
 import { cn } from "@/lib/utils"
 import { Flag } from "@/components/ui/flag"
 import { Input } from "@/components/ui/input"
 
 export interface CurrencyInputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
-  countryCode: string
-  flagSize?: number
+  currency: Currency
   containerClassName?: string
-  flagClassName?: string
 }
 
-const CurrencyInput = React.forwardRef<HTMLInputElement, CurrencyInputProps>(
-  (
-    { countryCode, flagSize, containerClassName, flagClassName, ...props },
-    ref
-  ) => {
-    return (
-      <div className={cn("relative flex items-center", containerClassName)}>
-        <Flag
-          countryCode={countryCode}
-          className={cn("absolute left-2", flagClassName)}
-          size={flagSize}
-        />
-        <Input
-          ref={ref}
-          className="h-14 pl-11 text-base"
-          type="number"
-          inputMode="decimal"
-          {...props}
-        />
-      </div>
-    )
+const CurrencyInput: FC<CurrencyInputProps> = ({
+  currency,
+  containerClassName,
+  value,
+  onChange,
+  ...props
+}) => {
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  const focusInput = () => {
+    if (inputRef.current) {
+      inputRef.current.focus()
+    }
   }
-)
+
+  const handleFocus: FocusEventHandler<HTMLInputElement> = (event) => {
+    const input = event.target
+
+    setTimeout(() => {
+      const length = input.value.length
+      input.setSelectionRange(length, length)
+    }, 0)
+  }
+
+  const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
+    const newValue = event.target.value
+
+    if (newValue === "" || /^\d*\.?\d*$/.test(newValue)) {
+      if (onChange) {
+        onChange(event)
+      }
+    }
+  }
+
+  return (
+    <div
+      onClick={focusInput}
+      className={cn(
+        "focus-within:ring-ring ring-offset-background flex cursor-pointer items-center justify-between rounded-lg border p-4 transition-shadow focus-within:ring-2 focus-within:ring-offset-2 ",
+        containerClassName
+      )}
+    >
+      <div className="flex shrink-0">
+        <Flag countryCode={currency.countryCode} size={32} />
+        <div className="ml-3 flex flex-col justify-center">
+          <span className="text-nowrap pb-1 text-base leading-3">
+            {currency.currencyName}
+          </span>
+          <span className="text-ring text-sm leading-3">
+            {currency.currencyCode}
+          </span>
+        </div>
+      </div>
+      <Input
+        ref={inputRef}
+        value={value}
+        className="size-auto min-w-3 max-w-[40%] shrink text-ellipsis rounded-none border-none p-0 text-right text-base focus-visible:ring-0 focus-visible:ring-offset-0"
+        inputMode="numeric"
+        placeholder="0"
+        onFocus={handleFocus}
+        onChange={handleChange}
+        {...props}
+      />
+    </div>
+  )
+}
 
 CurrencyInput.displayName = "CurrencyInput"
 

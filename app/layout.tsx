@@ -58,7 +58,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <head />
         <body
           className={cn(
-            "bg-background min-h-screen font-sans antialiased transition-colors duration-300",
+            "bg-muted min-h-screen font-sans antialiased transition-colors duration-300",
             GeistSans.variable,
             GeistMono.variable
           )}
