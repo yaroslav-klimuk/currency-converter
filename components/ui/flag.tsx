@@ -16,7 +16,10 @@ export function Flag({ countryCode, size = 22, className }: FlagProps) {
   const [isLoaded, setIsLoaded] = useState<boolean>(false)
 
   return (
-    <div className={cn("flex", className)}>
+    <div
+      className={cn("flex", className)}
+      style={{ width: `${size}px`, height: `${size}px` }}
+    >
       {!isLoaded && (
         <Skeleton
           circle
@@ -35,9 +38,7 @@ export function Flag({ countryCode, size = 22, className }: FlagProps) {
           width: `${size}px`,
           height: `${size}px`,
         }}
-        className={`rounded-full border ${
-          isLoaded ? "opacity-100" : "opacity-0"
-        }`}
+        className={`rounded-full border ${isLoaded ? "opacity-100" : "opacity-0"}`}
         onLoadingComplete={() => setIsLoaded(true)}
       />
     </div>

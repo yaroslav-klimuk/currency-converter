@@ -68,7 +68,10 @@ export default function RootLayout({ children }: RootLayoutProps) {
               baseColor="hsl(var(--skeleton-bg))"
               highlightColor="hsl(var(--skeleton-highlight))"
             >
-              <div className="relative flex min-h-screen flex-col">
+              <div
+                vaul-drawer-wrapper=""
+                className="bg-muted relative flex min-h-screen flex-col rounded-md"
+              >
                 <SiteHeader />
                 <div className="flex-1">{children}</div>
                 <SiteFooter />

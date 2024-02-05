@@ -2,7 +2,9 @@ import {
   Laptop,
   LucideProps,
   Moon,
+  Pencil,
   Plus,
+  Settings,
   SunMedium,
   Twitter,
   type LucideIcon,
@@ -16,6 +18,8 @@ export const Icons = {
   twitter: Twitter,
   laptop: Laptop,
   plus: Plus,
+  pensil: Pencil,
+  Settings: Settings,
   logo: (props: LucideProps) => (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...props}>
       <path
