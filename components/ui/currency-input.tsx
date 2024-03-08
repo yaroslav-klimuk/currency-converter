@@ -28,7 +28,7 @@ const CurrencyInput = React.forwardRef<HTMLInputElement, CurrencyInputProps>(
           ref={ref}
           className="h-14 pl-11 text-base"
           type="number"
-          inputMode="numeric"
+          inputMode="decimal"
           {...props}
         />
       </div>
