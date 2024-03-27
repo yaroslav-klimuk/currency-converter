@@ -2,18 +2,23 @@
 
 import { useEffect, useState } from "react"
 import supportedCurrencies from "@/helpers/currencies"
-import { AnimatePresence, motion } from "framer-motion"
+import { AnimatePresence } from "framer-motion"
 import Skeleton from "react-loading-skeleton"
 import { useIsClient, useLocalStorage } from "usehooks-ts"
 
 import { Currency, CurrencyCode, Rate } from "@/types/currency"
-import { AnimatedListItem } from "@/components/ui/animated-list-item"
 import { Button } from "@/components/ui/button"
-import { CurrencyInput } from "@/components/ui/currency-input"
+import {
+  ContextMenu,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuTrigger,
+} from "@/components/ui/context-menu"
 import CurrencySelectModal from "@/components/currency-select-modal"
 import { Icons } from "@/components/icons"
 
 import Container from "./container"
+import DraggableCurrencyInput from "./draggable-currency-input"
 
 interface ConverterProps {
   rates: Rate
@@ -45,6 +50,12 @@ export default function Converter({ rates }: ConverterProps) {
   const [currencies, setCurrencies] = useLocalStorage<Currency[]>(
     "currencies",
     defaultCurrecnies
+  )
+  const [dragged, setDragged] = useState<Record<CurrencyCode, boolean>>(
+    currencies.reduce(
+      (acc, currency) => ({ ...acc, [currency.currencyCode]: false }),
+      {} as Record<CurrencyCode, boolean>
+    )
   )
   const [isCurrenciesListOpen, setIsCurrenciesListOpen] = useState(false)
 
@@ -93,16 +104,25 @@ export default function Converter({ rates }: ConverterProps) {
 
   const onOpenCurrenciesList = () => setIsCurrenciesListOpen(true)
 
+  const onRemoveCurrency = (currency: Currency) => {
+    if (currencies.length > 2) {
+      setCurrencies((prev) =>
+        prev.filter((item) => item.currencyCode !== currency.currencyCode)
+      )
+    }
+  }
+
+  const setIsDragged = (currencyCode: CurrencyCode, value: boolean) => {
+    setDragged((prev) => ({ ...prev, [currencyCode]: value }))
+  }
+
   return (
     <>
       <Container>
         <div className="flex items-center justify-between border-b p-3">
-          <div className="flex gap-2">
+          <div className="flex">
             <Button size="icon" variant="outline" className="size-8">
-              <Icons.Settings size={20} />
-            </Button>
-            <Button size="icon" variant="outline" className="size-8">
-              <Icons.pensil size={20} />
+              <Icons.settings size={20} />
             </Button>
           </div>
           <Button
@@ -116,47 +136,66 @@ export default function Converter({ rates }: ConverterProps) {
           </Button>
         </div>
 
-        <div className="flex flex-col px-4 pb-10 pt-4 sm:mx-auto sm:w-[70%]">
-          <motion.h2
-            layout
-            className="pb-5 text-3xl font-bold leading-tight tracking-tighter"
-          >
+        <div className="flex flex-col p-5 px-4 pb-10 pt-4 sm:mx-auto sm:w-[70%]">
+          <h2 className="pb-5 text-3xl font-bold leading-tight tracking-tighter">
             Converter
-          </motion.h2>
+          </h2>
 
-          {!isClient ? (
-            <Skeleton
-              containerClassName="flex flex-col"
-              className="mb-4"
-              width={"100%"}
-              height={66}
-              count={4}
-              inline
-            />
-          ) : (
-            <AnimatePresence initial={false} mode="popLayout">
-              {currencies.map((currency) => (
-                <AnimatedListItem key={currency.currencyName}>
-                  <CurrencyInput
-                    key={currency.currencyCode}
-                    currency={currency}
-                    value={state[currency.currencyCode] || ""}
-                    containerClassName="mb-4"
-                    aria-label={`${currency.currencyCode} currency input`}
-                    maxLength={MAX_LENGTH}
-                    onChange={(event) =>
-                      convertCurrencies(
-                        currency.currencyCode,
-                        event.target.value
-                      )
-                    }
-                  />
-                </AnimatedListItem>
-              ))}
-            </AnimatePresence>
-          )}
+          <div>
+            {!isClient ? (
+              <Skeleton
+                containerClassName="flex flex-col"
+                className="mb-4"
+                width={"100%"}
+                height={66}
+                count={4}
+                inline
+              />
+            ) : (
+              <AnimatePresence initial={false} mode="sync">
+                {currencies.map((currency) => (
+                  <ContextMenu key={currency.currencyCode}>
+                    <ContextMenuTrigger>
+                      <DraggableCurrencyInput
+                        currency={currency}
+                        value={state[currency.currencyCode] || ""}
+                        maxLength={MAX_LENGTH}
+                        draggable={currencies.length > 2}
+                        isDragged={dragged[currency.currencyCode]}
+                        setIsDragged={setIsDragged}
+                        onChange={(event) =>
+                          convertCurrencies(
+                            currency.currencyCode,
+                            event.target.value
+                          )
+                        }
+                        onRemove={onRemoveCurrency}
+                      />
+                    </ContextMenuTrigger>
+                    <ContextMenuContent>
+                      <ContextMenuItem className="cursor-pointer p-3 text-base md:px-2 md:py-1.5">
+                        <Icons.shuffle size={18} className="mr-2" />
+                        Reorder
+                      </ContextMenuItem>
+                      <ContextMenuItem
+                        className="text-destructive focus:text-destructive cursor-pointer p-3 text-base md:px-2 md:py-1.5"
+                        disabled={currencies.length < 3}
+                        onClick={() =>
+                          setIsDragged(currency.currencyCode, true)
+                        }
+                      >
+                        <Icons.trash size={18} className="mr-2" />
+                        Delete
+                      </ContextMenuItem>
+                    </ContextMenuContent>
+                  </ContextMenu>
+                ))}
+              </AnimatePresence>
+            )}
+          </div>
         </div>
       </Container>
+
       <CurrencySelectModal
         isOpen={isCurrenciesListOpen}
         onOpenChange={setIsCurrenciesListOpen}

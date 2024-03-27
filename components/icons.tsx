@@ -1,4 +1,7 @@
 import {
+  ArrowUpDown,
+  Check,
+  GripVertical,
   Laptop,
   LucideProps,
   Moon,
@@ -6,6 +9,7 @@ import {
   Plus,
   Settings,
   SunMedium,
+  Trash2,
   Twitter,
   type LucideIcon,
 } from "lucide-react"
@@ -19,7 +23,11 @@ export const Icons = {
   laptop: Laptop,
   plus: Plus,
   pensil: Pencil,
-  Settings: Settings,
+  settings: Settings,
+  trash: Trash2,
+  drag: GripVertical,
+  check: Check,
+  shuffle: ArrowUpDown,
   logo: (props: LucideProps) => (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...props}>
       <path

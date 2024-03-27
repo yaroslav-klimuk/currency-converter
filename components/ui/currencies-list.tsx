@@ -15,7 +15,7 @@ export default function CurrenciesList({
       {currencies.map((currency) => (
         <button
           className="hover:bg-muted focus-visible:ring-ring ring-offset-background mb-2 flex w-full cursor-pointer items-center rounded-md p-2 transition-shadow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
-          key={currency.currencyCode}
+          key={currency.countryCode}
           onClick={() => onSelectCurrency(currency)}
         >
           <Flag countryCode={currency.countryCode} size={28} />

@@ -58,7 +58,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <head />
         <body
           className={cn(
-            "bg-muted min-h-screen font-sans antialiased transition-colors duration-300",
+            "bg-muted min-h-dvh font-sans antialiased transition-colors duration-300",
             GeistSans.variable,
             GeistMono.variable
           )}
@@ -70,7 +70,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
             >
               <div
                 vaul-drawer-wrapper=""
-                className="bg-muted relative flex min-h-screen flex-col rounded-md"
+                className="bg-muted relative flex min-h-dvh flex-col rounded-md"
               >
                 <SiteHeader />
                 <div className="flex-1">{children}</div>

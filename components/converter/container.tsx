@@ -1,5 +1,4 @@
 import { PropsWithChildren } from "react"
-import { motion } from "framer-motion"
 
 import { cn } from "@/lib/utils"
 
@@ -12,15 +11,14 @@ export default function Container({
   children,
 }: PropsWithChildren<ContainerProps>) {
   return (
-    <motion.div
-      layout
+    <div
       className={cn(
-        "bg-background relative flex min-h-[600px] w-full max-w-[500px] flex-col rounded-xl border shadow-md",
+        "bg-background relative flex min-h-[500px] w-full max-w-[500px] flex-col rounded-xl border shadow-md",
         className
       )}
     >
       {children}
-      <div className="mt-auto border-t p-3">footer</div>
-    </motion.div>
+      <div className="mt-auto border-t p-3"></div>
+    </div>
   )
 }

@@ -34,7 +34,7 @@ export function SiteFooter() {
             target="_blank"
             rel="noreferrer"
           >
-            <span className="font-medium underline-offset-4 hover:underline">
+            <span className="hover:underline font-medium underline-offset-4">
               shadcn/ui {isClient && resolvedTheme === "dark" ? "🤍" : "🖤"}
             </span>
           </Link>

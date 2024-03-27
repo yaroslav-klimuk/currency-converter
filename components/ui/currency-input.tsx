@@ -50,11 +50,11 @@ const CurrencyInput: FC<CurrencyInputProps> = ({
     <div
       onClick={focusInput}
       className={cn(
-        "focus-within:ring-ring ring-offset-background flex cursor-pointer items-center justify-between rounded-lg border p-4 transition-shadow focus-within:ring-2 focus-within:ring-offset-2 ",
+        "bg-background focus-within:ring-ring ring-offset-background flex w-full cursor-pointer select-none items-center justify-between rounded-lg border p-4 transition-shadow focus-within:ring-2 focus-within:ring-offset-2",
         containerClassName
       )}
     >
-      <div className="flex shrink-0">
+      <div className="mr-1 flex shrink-0">
         <Flag countryCode={currency.countryCode} size={32} />
         <div className="ml-3 flex flex-col justify-center">
           <span className="text-nowrap pb-1 text-base leading-3">
@@ -71,6 +71,7 @@ const CurrencyInput: FC<CurrencyInputProps> = ({
         className="size-auto min-w-3 max-w-[40%] shrink text-ellipsis rounded-none border-none p-0 text-right text-base focus-visible:ring-0 focus-visible:ring-offset-0"
         inputMode="numeric"
         placeholder="0"
+        aria-label={`${currency.currencyCode} currency input`}
         onFocus={handleFocus}
         onChange={handleChange}
         {...props}
