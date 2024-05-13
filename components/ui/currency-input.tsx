@@ -1,13 +1,17 @@
-import * as React from "react"
-import { ChangeEventHandler, FC, FocusEventHandler, useRef } from "react"
+import {
+  ChangeEventHandler,
+  FC,
+  FocusEventHandler,
+  InputHTMLAttributes,
+  useRef,
+} from "react"
 
 import { Currency } from "@/types/currency"
 import { cn } from "@/lib/utils"
 import { Flag } from "@/components/ui/flag"
 import { Input } from "@/components/ui/input"
 
-export interface CurrencyInputProps
-  extends React.InputHTMLAttributes<HTMLInputElement> {
+interface CurrencyInputProps extends InputHTMLAttributes<HTMLInputElement> {
   currency: Currency
   containerClassName?: string
 }
@@ -82,4 +86,4 @@ const CurrencyInput: FC<CurrencyInputProps> = ({
 
 CurrencyInput.displayName = "CurrencyInput"
 
-export { CurrencyInput }
+export { CurrencyInput, type CurrencyInputProps }

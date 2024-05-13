@@ -1,24 +1,19 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import supportedCurrencies from "@/helpers/currencies"
-import { AnimatePresence } from "framer-motion"
+import { AnimatePresence, Reorder } from "framer-motion"
 import Skeleton from "react-loading-skeleton"
 import { useIsClient, useLocalStorage } from "usehooks-ts"
 
 import { Currency, CurrencyCode, Rate } from "@/types/currency"
 import { Button } from "@/components/ui/button"
-import {
-  ContextMenu,
-  ContextMenuContent,
-  ContextMenuItem,
-  ContextMenuTrigger,
-} from "@/components/ui/context-menu"
+import { InputContextMenu } from "@/components/converter/input"
 import CurrencySelectModal from "@/components/currency-select-modal"
 import { Icons } from "@/components/icons"
 
 import Container from "./container"
-import DraggableCurrencyInput from "./draggable-currency-input"
+import { Input } from "./input"
 
 interface ConverterProps {
   rates: Rate
@@ -58,6 +53,9 @@ export default function Converter({ rates }: ConverterProps) {
     )
   )
   const [isCurrenciesListOpen, setIsCurrenciesListOpen] = useState(false)
+  const [isEditModeEnabled, setIsEditModeEnabled] = useState(false)
+
+  const listRef = useRef<HTMLDivElement>(null)
 
   const availableCurrencies = supportedCurrencies.filter((currency) => {
     return !currencies.some(
@@ -103,6 +101,8 @@ export default function Converter({ rates }: ConverterProps) {
   }
 
   const onOpenCurrenciesList = () => setIsCurrenciesListOpen(true)
+  const onEnableEditMode = () => setIsEditModeEnabled(true)
+  const onDisableEditMode = () => setIsEditModeEnabled(false)
 
   const onRemoveCurrency = (currency: Currency) => {
     if (currencies.length > 2) {
@@ -125,15 +125,26 @@ export default function Converter({ rates }: ConverterProps) {
               <Icons.settings size={20} />
             </Button>
           </div>
-          <Button
-            variant="outline"
-            className="h-8 px-2"
-            disabled={availableCurrencies.length === 0}
-            onClick={onOpenCurrenciesList}
-          >
-            <Icons.plus size={18} className="mr-1" />
-            Add
-          </Button>
+          {isEditModeEnabled ? (
+            <Button
+              variant="outline"
+              className="h-8 px-2"
+              onClick={onDisableEditMode}
+            >
+              <Icons.check size={18} className="mr-1" />
+              Done
+            </Button>
+          ) : (
+            <Button
+              variant="outline"
+              className="h-8 px-2"
+              disabled={availableCurrencies.length === 0}
+              onClick={onOpenCurrenciesList}
+            >
+              <Icons.plus size={18} className="mr-1" />
+              Add
+            </Button>
+          )}
         </div>
 
         <div className="flex flex-col p-5 px-4 pb-10 pt-4 sm:mx-auto sm:w-[70%]">
@@ -141,7 +152,7 @@ export default function Converter({ rates }: ConverterProps) {
             Converter
           </h2>
 
-          <div>
+          <div ref={listRef}>
             {!isClient ? (
               <Skeleton
                 containerClassName="flex flex-col"
@@ -152,14 +163,29 @@ export default function Converter({ rates }: ConverterProps) {
                 inline
               />
             ) : (
-              <AnimatePresence initial={false} mode="sync">
-                {currencies.map((currency) => (
-                  <ContextMenu key={currency.currencyCode}>
-                    <ContextMenuTrigger>
-                      <DraggableCurrencyInput
+              <Reorder.Group
+                axis="y"
+                values={currencies}
+                onReorder={setCurrencies}
+                className="relative flex flex-col"
+                role="list"
+              >
+                <AnimatePresence initial={false} mode="sync">
+                  {currencies.map((currency) => (
+                    <InputContextMenu
+                      key={currency.currencyCode}
+                      disabled={isEditModeEnabled}
+                      onEditModeClick={onEnableEditMode}
+                      onDeleteClick={() =>
+                        setIsDragged(currency.currencyCode, true)
+                      }
+                    >
+                      <Input
+                        showControls={isEditModeEnabled}
                         currency={currency}
                         value={state[currency.currencyCode] || ""}
                         maxLength={MAX_LENGTH}
+                        dragConstraints={listRef}
                         draggable={currencies.length > 2}
                         isDragged={dragged[currency.currencyCode]}
                         setIsDragged={setIsDragged}
@@ -171,26 +197,10 @@ export default function Converter({ rates }: ConverterProps) {
                         }
                         onRemove={onRemoveCurrency}
                       />
-                    </ContextMenuTrigger>
-                    <ContextMenuContent>
-                      <ContextMenuItem className="cursor-pointer p-3 text-base md:px-2 md:py-1.5">
-                        <Icons.shuffle size={18} className="mr-2" />
-                        Reorder
-                      </ContextMenuItem>
-                      <ContextMenuItem
-                        className="text-destructive focus:text-destructive cursor-pointer p-3 text-base md:px-2 md:py-1.5"
-                        disabled={currencies.length < 3}
-                        onClick={() =>
-                          setIsDragged(currency.currencyCode, true)
-                        }
-                      >
-                        <Icons.trash size={18} className="mr-2" />
-                        Delete
-                      </ContextMenuItem>
-                    </ContextMenuContent>
-                  </ContextMenu>
-                ))}
-              </AnimatePresence>
+                    </InputContextMenu>
+                  ))}
+                </AnimatePresence>
+              </Reorder.Group>
             )}
           </div>
         </div>
