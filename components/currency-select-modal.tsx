@@ -1,17 +1,17 @@
 import { useMediaQuery } from "usehooks-ts"
 
 import { Currency } from "@/types/currency"
-import {
-  AlertDialog,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
 import CurrenciesList from "@/components/ui/currencies-list"
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
 import {
   Drawer,
   DrawerClose,
@@ -53,12 +53,12 @@ export default function CurrencySelectModal({
 
   if (isDesktop) {
     return (
-      <AlertDialog open={isOpen} onOpenChange={onOpenChange}>
-        <AlertDialogContent onEscapeKeyDown={closeModal} className="max-w-md">
-          <AlertDialogHeader>
-            <AlertDialogTitle>{TITLE}</AlertDialogTitle>
-            <AlertDialogDescription>{DESCRIPTION}</AlertDialogDescription>
-          </AlertDialogHeader>
+      <Dialog open={isOpen} onOpenChange={onOpenChange}>
+        <DialogContent onEscapeKeyDown={closeModal} className="max-w-md">
+          <DialogHeader>
+            <DialogTitle>{TITLE}</DialogTitle>
+            <DialogDescription>{DESCRIPTION}</DialogDescription>
+          </DialogHeader>
 
           <div className="max-h-[280px] min-h-32 overflow-y-scroll rounded-md border p-2">
             <CurrenciesList
@@ -67,11 +67,13 @@ export default function CurrencySelectModal({
             />
           </div>
 
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+          <DialogFooter>
+            <DialogClose asChild>
+              <Button variant="outline">Cancel</Button>
+            </DialogClose>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     )
   }
 
