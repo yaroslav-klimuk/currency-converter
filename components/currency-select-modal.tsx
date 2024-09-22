@@ -38,8 +38,9 @@ export default function CurrencySelectModal({
   currencies,
   setCurrency,
 }: CurrencySelectModalProps) {
-  const closeModal = () => onOpenChange(false)
   const isDesktop = useMediaQuery("(min-width: 768px)")
+
+  const closeModal = () => onOpenChange(false)
 
   const sortedCurrencies = currencies.sort((a, b) => {
     if (a.countryCode < b.currencyCode) {

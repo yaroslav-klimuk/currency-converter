@@ -72,7 +72,7 @@ const CurrencyInput: FC<CurrencyInputProps> = ({
       <Input
         ref={inputRef}
         value={value}
-        className="size-auto min-w-3 max-w-[40%] shrink text-ellipsis rounded-none border-none p-0 text-right text-base focus-visible:ring-0 focus-visible:ring-offset-0"
+        className="size-auto min-w-3 max-w-[40%] shrink text-ellipsis rounded-none border-none p-0 text-right text-base tabular-nums focus-visible:ring-0 focus-visible:ring-offset-0"
         inputMode="numeric"
         placeholder="0"
         aria-label={`${currency.currencyCode} currency input`}

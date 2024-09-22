@@ -3,7 +3,6 @@ import Link from "next/link"
 import { siteConfig } from "@/config/site"
 import { buttonVariants } from "@/components/ui/button"
 import { Icons } from "@/components/icons"
-import { ModeToggle } from "@/components/mode-toggle"
 
 export function SiteHeader() {
   return (
@@ -27,23 +26,6 @@ export function SiteHeader() {
                 <span className="sr-only">GitHub</span>
               </div>
             </Link>
-            <Link
-              href={siteConfig.links.twitter}
-              className="focus-visible:ring-ring rounded transition-shadow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <div
-                className={buttonVariants({
-                  size: "sm",
-                  variant: "ghost",
-                })}
-              >
-                <Icons.twitter className="size-5 fill-current" />
-                <span className="sr-only">Twitter</span>
-              </div>
-            </Link>
-            <ModeToggle />
           </nav>
         </div>
       </div>

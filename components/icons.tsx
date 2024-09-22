@@ -5,12 +5,10 @@ import {
   Laptop,
   LucideProps,
   Moon,
-  Pencil,
   Plus,
   Settings,
   SunMedium,
   Trash2,
-  Twitter,
   type LucideIcon,
 } from "lucide-react"
 
@@ -19,10 +17,8 @@ export type Icon = LucideIcon
 export const Icons = {
   sun: SunMedium,
   moon: Moon,
-  twitter: Twitter,
   laptop: Laptop,
   plus: Plus,
-  pensil: Pencil,
   settings: Settings,
   trash: Trash2,
   drag: GripVertical,

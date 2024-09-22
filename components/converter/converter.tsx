@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button"
 import { InputContextMenu } from "@/components/converter/input"
 import CurrencySelectModal from "@/components/currency-select-modal"
 import { Icons } from "@/components/icons"
+import SettingsModal from "@/components/settings-modal"
 
 import Container from "./container"
 import { Input } from "./input"
@@ -41,6 +42,7 @@ const MAX_LENGTH = 10
 
 export default function Converter({ rates }: ConverterProps) {
   const isClient = useIsClient()
+
   const [state, setState] = useState<Rate>({} as Rate)
   const [currencies, setCurrencies] = useLocalStorage<Currency[]>(
     "currencies",
@@ -53,6 +55,7 @@ export default function Converter({ rates }: ConverterProps) {
     )
   )
   const [isCurrenciesListOpen, setIsCurrenciesListOpen] = useState(false)
+  const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false)
   const [isEditModeEnabled, setIsEditModeEnabled] = useState(false)
 
   const listRef = useRef<HTMLDivElement>(null)
@@ -101,6 +104,7 @@ export default function Converter({ rates }: ConverterProps) {
   }
 
   const onOpenCurrenciesList = () => setIsCurrenciesListOpen(true)
+  const onOpenSettingsModal = () => setIsSettingsModalOpen(true)
   const onEnableEditMode = () => setIsEditModeEnabled(true)
   const onDisableEditMode = () => setIsEditModeEnabled(false)
 
@@ -121,7 +125,12 @@ export default function Converter({ rates }: ConverterProps) {
       <Container>
         <div className="flex items-center justify-between border-b p-3">
           <div className="flex">
-            <Button size="icon" variant="outline" className="size-8">
+            <Button
+              size="icon"
+              variant="outline"
+              className="size-8"
+              onClick={onOpenSettingsModal}
+            >
               <Icons.settings size={20} />
             </Button>
           </div>
@@ -211,6 +220,11 @@ export default function Converter({ rates }: ConverterProps) {
         onOpenChange={setIsCurrenciesListOpen}
         currencies={availableCurrencies}
         setCurrency={onSelectCurrency}
+      />
+
+      <SettingsModal
+        isOpen={isSettingsModalOpen}
+        onOpenChange={setIsSettingsModalOpen}
       />
     </>
   )
