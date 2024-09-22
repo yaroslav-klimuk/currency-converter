@@ -73,7 +73,7 @@ const DraggableInput: FC<DraggableInputProps> = ({
         }}
         transition={{ type: "tween", duration: 0.2 }}
       >
-        <CurrencyInput currency={currency} disabled={isDragged} {...props} />
+        <CurrencyInput currency={currency} disabled={disabled} {...props} />
         <Button
           tabIndex={isDragged ? 0 : -1}
           variant="destructive"

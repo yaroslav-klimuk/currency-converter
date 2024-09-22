@@ -29,12 +29,12 @@ export function SiteFooter() {
         <div className="order-2 flex flex-1 items-center justify-center text-sm md:order-3 md:justify-end ">
           <span className="pr-3">Made using</span>
           <Link
-            href={siteConfig.links.docs}
+            href={siteConfig.links.shadcn}
             className="focus-visible:ring-ring rounded transition-shadow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
             target="_blank"
             rel="noreferrer"
           >
-            <span className="hover:underline font-medium underline-offset-4">
+            <span className="font-medium underline-offset-4 hover:underline">
               shadcn/ui {isClient && resolvedTheme === "dark" ? "🤍" : "🖤"}
             </span>
           </Link>

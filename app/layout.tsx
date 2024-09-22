@@ -25,22 +25,6 @@ export const metadata: Metadata = {
     { media: "(prefers-color-scheme: dark)", color: "hsl(240 10% 3.9%)" },
   ],
   viewport: "width=device-width, initial-scale=1, maximum-scale=1",
-  icons: {
-    icon: [
-      { url: "/icons/favicon-16x16.png", sizes: "16x16", type: "image/png" },
-      { url: "/icons/favicon-32x32.png", sizes: "32x32", type: "image/png" },
-    ],
-    shortcut: "/icons/favicon.ico",
-    apple: [{ url: "/icons/apple-touch-icon.png" }],
-    other: [
-      {
-        rel: "mask-icon",
-        url: "/icons/safari-pinned-tab.svg",
-        // @ts-ignore
-        color: "#fff",
-      },
-    ],
-  },
   appleWebApp: {
     title: siteConfig.shortName,
   },

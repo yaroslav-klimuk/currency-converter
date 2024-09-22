@@ -10,6 +10,7 @@ const Input = <T,>({
   currency,
   value,
   draggable,
+  isDragged,
   showControls,
   dragConstraints,
   ...props
@@ -30,7 +31,8 @@ const Input = <T,>({
         value={value}
         currency={currency}
         draggable={draggable && !showControls}
-        disabled={showControls}
+        isDragged={isDragged}
+        disabled={showControls || isDragged}
         motionProps={motionProps}
         {...props}
       />
