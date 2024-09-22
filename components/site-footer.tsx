@@ -13,7 +13,7 @@ export function SiteFooter() {
 
   return (
     <footer className="bg-background bottom-0 w-full border-t transition-colors duration-300">
-      <div className="container flex h-20 flex-col py-2 md:flex-row">
+      <div className="flex h-20 flex-col px-4 py-2 sm:container md:flex-row">
         <div className="order-3 flex flex-1 items-center justify-center md:order-1 md:justify-start"></div>
         <div className="order-2 flex flex-1 items-center justify-center">
           <Link
