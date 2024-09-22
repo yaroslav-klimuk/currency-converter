@@ -177,11 +177,12 @@ export default function Converter({ rates }: ConverterProps) {
               />
             ) : (
               <Reorder.Group
+                layoutScroll
                 axis="y"
                 values={currencies}
-                onReorder={setCurrencies}
                 className="relative flex flex-col"
                 role="list"
+                onReorder={setCurrencies}
               >
                 <AnimatePresence initial={false} mode="sync">
                   {currencies.map((currency) => (
