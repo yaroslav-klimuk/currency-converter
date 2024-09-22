@@ -1,6 +1,7 @@
 import { useTheme } from "next-themes"
-import { useIsClient, useMediaQuery } from "usehooks-ts"
+import { useLocalStorage, useMediaQuery } from "usehooks-ts"
 
+import { Settings } from "@/types/settings"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -18,6 +19,7 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from "@/components/ui/drawer"
+import { Flag, flagSets, FlagSetsType } from "@/components/ui/flag"
 import {
   Select,
   SelectContent,
@@ -49,15 +51,109 @@ const options = {
   },
 }
 
+interface ThemeSelectProps {
+  resolvedTheme: string
+  setTheme: (theme: string) => void
+}
+
+function ThemeSelect({ resolvedTheme, setTheme }: ThemeSelectProps) {
+  return (
+    <Select defaultValue={resolvedTheme} onValueChange={setTheme}>
+      <span className="sr-only">Toggle theme</span>
+      <SelectTrigger className="w-[60%]">
+        <SelectValue>
+          <div className="flex items-center">
+            {options[resolvedTheme as keyof typeof options].icon}
+            {options[resolvedTheme as keyof typeof options].label}
+          </div>
+        </SelectValue>
+      </SelectTrigger>
+
+      <SelectContent>
+        {Object.entries(options).map(([key, { icon, label }]) => (
+          <SelectItem key={key} value={key}>
+            <div className="flex items-center">
+              {icon}
+              {label}
+            </div>
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
+  )
+}
+
+interface FlagSetSelectProps {
+  flagSet: FlagSetsType
+  setFlagSet: (flagSet: FlagSetsType) => void
+}
+
+function FlagSetSelect({ flagSet, setFlagSet }: FlagSetSelectProps) {
+  return (
+    <Select defaultValue={flagSet} onValueChange={setFlagSet}>
+      <span className="sr-only">Toggle theme</span>
+      <SelectTrigger className="w-[60%]">
+        <SelectValue>
+          <div className="flex items-center">
+            <div className="mr-1 flex">
+              <Flag
+                flagSet={flagSet as FlagSetsType}
+                countryCode="gb"
+                flagClassName="border-none"
+              />
+              <Flag
+                flagSet={flagSet as FlagSetsType}
+                countryCode="us"
+                flagClassName="ring-background ring-2 -translate-x-2 border-none group-focus:ring-accent"
+              />
+            </div>
+
+            <span className="capitalize">{flagSet}</span>
+          </div>
+        </SelectValue>
+      </SelectTrigger>
+
+      <SelectContent>
+        {Object.keys(flagSets).map((flagSet) => (
+          <SelectItem key={flagSet} value={flagSet} className="group">
+            <div className="flex items-center">
+              <div className="mr-1 flex">
+                <Flag
+                  flagSet={flagSet as FlagSetsType}
+                  countryCode="gb"
+                  flagClassName="border-none"
+                />
+                <Flag
+                  flagSet={flagSet as FlagSetsType}
+                  countryCode="us"
+                  flagClassName="ring-background ring-2 -translate-x-2 border-none group-focus:ring-accent"
+                />
+              </div>
+
+              <span className="capitalize">{flagSet}</span>
+            </div>
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
+  )
+}
+
 export default function SettingsModal({
   isOpen,
   onOpenChange,
 }: SettingsModalProps) {
-  const isDesktop = useMediaQuery("(min-width: 768px)")
-  const isClient = useIsClient()
   const { resolvedTheme, setTheme } = useTheme()
+  const [settings, setSettings] = useLocalStorage<Settings>("settings", {
+    flagSet: "colorful",
+  })
+  const isDesktop = useMediaQuery("(min-width: 768px)")
 
   const closeModal = () => onOpenChange(false)
+
+  const onFlagSetChange = (flagSet: FlagSetsType) => {
+    setSettings({ ...settings, flagSet })
+  }
 
   if (isDesktop) {
     return (
@@ -70,33 +166,16 @@ export default function SettingsModal({
 
           <div className="flex items-center justify-between">
             <span>Theme</span>
-
-            <Select defaultValue={resolvedTheme} onValueChange={setTheme}>
-              <span className="sr-only">Toggle theme</span>
-              <SelectTrigger className="w-[60%]">
-                <SelectValue>
-                  <div className="flex items-center">
-                    {isClient ? (
-                      <>
-                        {options[resolvedTheme as keyof typeof options].icon}
-                        {options[resolvedTheme as keyof typeof options].label}
-                      </>
-                    ) : null}
-                  </div>
-                </SelectValue>
-              </SelectTrigger>
-
-              <SelectContent>
-                {Object.entries(options).map(([key, { icon, label }]) => (
-                  <SelectItem key={key} value={key}>
-                    <div className="flex items-center">
-                      {icon}
-                      {label}
-                    </div>
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            {resolvedTheme ? (
+              <ThemeSelect resolvedTheme={resolvedTheme} setTheme={setTheme} />
+            ) : null}
+          </div>
+          <div className="flex items-center justify-between">
+            <span>Flag set</span>
+            <FlagSetSelect
+              flagSet={settings.flagSet}
+              setFlagSet={onFlagSetChange}
+            />
           </div>
 
           <DialogFooter>
@@ -115,35 +194,22 @@ export default function SettingsModal({
           <DrawerClose onClick={closeModal} />
         </DrawerHeader>
 
-        <div className="p-4">
+        <div className="p-4 pb-3">
           <div className="flex items-center justify-between">
             <span>Theme</span>
-            <Select defaultValue={resolvedTheme} onValueChange={setTheme}>
-              <span className="sr-only">Toggle theme</span>
-              <SelectTrigger className="w-[60%]">
-                <SelectValue>
-                  <div className="flex items-center">
-                    {isClient ? (
-                      <>
-                        {options[resolvedTheme as keyof typeof options].icon}
-                        {options[resolvedTheme as keyof typeof options].label}
-                      </>
-                    ) : null}
-                  </div>
-                </SelectValue>
-              </SelectTrigger>
+            {resolvedTheme ? (
+              <ThemeSelect resolvedTheme={resolvedTheme} setTheme={setTheme} />
+            ) : null}
+          </div>
+        </div>
 
-              <SelectContent>
-                {Object.entries(options).map(([key, { icon, label }]) => (
-                  <SelectItem key={key} value={key}>
-                    <div className="flex items-center">
-                      {icon}
-                      {label}
-                    </div>
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+        <div className="px-4 pb-4">
+          <div className="flex items-center justify-between">
+            <span>Flag set</span>
+            <FlagSetSelect
+              flagSet={settings.flagSet}
+              setFlagSet={onFlagSetChange}
+            />
           </div>
         </div>
 

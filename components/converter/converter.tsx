@@ -7,6 +7,7 @@ import Skeleton from "react-loading-skeleton"
 import { useIsClient, useLocalStorage } from "usehooks-ts"
 
 import { Currency, CurrencyCode, Rate } from "@/types/currency"
+import { Settings } from "@/types/settings"
 import { Button } from "@/components/ui/button"
 import { InputContextMenu } from "@/components/converter/input"
 import CurrencySelectModal from "@/components/currency-select-modal"
@@ -48,6 +49,9 @@ export default function Converter({ rates }: ConverterProps) {
     "currencies",
     defaultCurrecnies
   )
+  const [settings] = useLocalStorage<Settings>("settings", {
+    flagSet: "colorful",
+  })
   const [dragged, setDragged] = useState<Record<CurrencyCode, boolean>>(
     currencies.reduce(
       (acc, currency) => ({ ...acc, [currency.currencyCode]: false }),
@@ -191,6 +195,7 @@ export default function Converter({ rates }: ConverterProps) {
                     >
                       <Input
                         showControls={isEditModeEnabled}
+                        flagSet={settings.flagSet}
                         currency={currency}
                         value={state[currency.currencyCode] || ""}
                         maxLength={MAX_LENGTH}

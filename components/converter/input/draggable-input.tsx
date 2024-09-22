@@ -55,10 +55,7 @@ const DraggableInput: FC<DraggableInputProps> = ({
   return (
     <motion.div
       ref={ref}
-      className={cn(
-        "z-10 w-full overflow-hidden",
-        disabled && "pointer-events-none"
-      )}
+      className="z-10 w-full overflow-hidden"
       {...motionProps}
     >
       <motion.div

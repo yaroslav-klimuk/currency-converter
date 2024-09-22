@@ -6,13 +6,28 @@ import "react-loading-skeleton/dist/skeleton.css"
 
 import { cn } from "@/lib/utils"
 
-export interface FlagProps {
-  countryCode: string
-  size?: number
-  className?: string
+export type FlagSetsType = "colorful" | "default"
+
+export const flagSets: Record<FlagSetsType, string> = {
+  colorful: "https://hatscripts.github.io/circle-flags/flags/",
+  default: "https://flagicons.lipis.dev/flags/1x1/",
 }
 
-export function Flag({ countryCode, size = 22, className }: FlagProps) {
+export interface FlagProps {
+  countryCode: string
+  flagSet?: FlagSetsType
+  size?: number
+  className?: string
+  flagClassName?: string
+}
+
+export function Flag({
+  countryCode,
+  flagSet = "colorful",
+  size = 22,
+  className,
+  flagClassName,
+}: FlagProps) {
   const [isLoaded, setIsLoaded] = useState<boolean>(false)
 
   return (
@@ -29,8 +44,7 @@ export function Flag({ countryCode, size = 22, className }: FlagProps) {
         />
       )}
       <Image
-        // src={`https://flagicons.lipis.dev/flags/1x1/${countryCode.toLowerCase()}.svg`}
-        src={`https://hatscripts.github.io/circle-flags/flags/${countryCode.toLowerCase()}.svg`}
+        src={flagSets[flagSet] + countryCode.toLowerCase() + ".svg"}
         alt={countryCode}
         width={size}
         height={size}
@@ -38,7 +52,10 @@ export function Flag({ countryCode, size = 22, className }: FlagProps) {
           width: `${size}px`,
           height: `${size}px`,
         }}
-        className={`rounded-full border ${isLoaded ? "opacity-100" : "opacity-0"}`}
+        className={cn(
+          `rounded-full border ${isLoaded ? "opacity-100" : "opacity-0"}`,
+          flagClassName
+        )}
         onLoadingComplete={() => setIsLoaded(true)}
       />
     </div>
