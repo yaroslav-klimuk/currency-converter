@@ -1,12 +1,5 @@
 name: Deploy
 on:
-  workflow_run:
-    workflows: ["Code check"]
-    types:
-      - completed
-    branches:
-      - main
-
   workflow_dispatch:
 env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
