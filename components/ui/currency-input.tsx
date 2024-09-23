@@ -52,7 +52,7 @@ const CurrencyInput: FC<CurrencyInputProps> = ({
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     const newValue = event.target.value
 
-    if (newValue === "" || /^\d*\.?\d*$/.test(newValue)) {
+    if (newValue === "" || /^\d*[.,]?\d*$/.test(newValue)) {
       if (onChange) {
         onChange(event)
       }
