@@ -17,18 +17,18 @@ jobs:
       url: ${{ steps.deploy.outputs.url }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Install pnpm
-        uses: pnpm/action-setup@v2.4.0
+        uses: pnpm/action-setup@v4
         with:
-          version: 8.14.3
+          version: 9
           run_install: false
 
       - name: "Install Node.js"
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: 19
+          node-version: 20
           cache: pnpm
 
       - run: pnpm install
