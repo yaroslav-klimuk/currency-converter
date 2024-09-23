@@ -52,11 +52,8 @@ export default function Converter({ rates }: ConverterProps) {
   const [settings] = useLocalStorage<Settings>("settings", {
     flagSet: "colorful",
   })
-  const [dragged, setDragged] = useState<Record<CurrencyCode, boolean>>(
-    currencies.reduce(
-      (acc, currency) => ({ ...acc, [currency.currencyCode]: false }),
-      {} as Record<CurrencyCode, boolean>
-    )
+  const [draggedCurrency, setDraggedCurrency] = useState<CurrencyCode | null>(
+    null
   )
   const [isCurrenciesListOpen, setIsCurrenciesListOpen] = useState(false)
   const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false)
@@ -77,11 +74,11 @@ export default function Converter({ rates }: ConverterProps) {
   const convertCurrencies = (currencyCode: CurrencyCode, value: string) => {
     setState({ ...state, [currencyCode]: value ? value : "" })
 
-    const filteredCurrnecies = Object.keys(state).filter(
+    const filteredCurrencies = Object.keys(state).filter(
       (key) => key !== currencyCode
     )
 
-    const convertedCurrencies = filteredCurrnecies.reduce((acc, key) => {
+    const convertedCurrencies = filteredCurrencies.reduce((acc, key) => {
       const convertedValue =
         (Number(value) / rates[currencyCode]) * rates[key as keyof Rate]
 
@@ -121,7 +118,13 @@ export default function Converter({ rates }: ConverterProps) {
   }
 
   const setIsDragged = (currencyCode: CurrencyCode, value: boolean) => {
-    setDragged((prev) => ({ ...prev, [currencyCode]: value }))
+    if (value) {
+      if (currencies.length > 2) {
+        setDraggedCurrency(currencyCode)
+      }
+    } else {
+      setDraggedCurrency((prev) => (prev === currencyCode ? null : prev))
+    }
   }
 
   return (
@@ -189,6 +192,7 @@ export default function Converter({ rates }: ConverterProps) {
                     <InputContextMenu
                       key={currency.currencyCode}
                       disabled={isEditModeEnabled}
+                      isDeleteDisabled={currencies.length <= 2}
                       onEditModeClick={onEnableEditMode}
                       onDeleteClick={() =>
                         setIsDragged(currency.currencyCode, true)
@@ -202,7 +206,7 @@ export default function Converter({ rates }: ConverterProps) {
                         maxLength={MAX_LENGTH}
                         dragConstraints={listRef}
                         draggable={currencies.length > 2}
-                        isDragged={dragged[currency.currencyCode]}
+                        isDragged={currency.currencyCode === draggedCurrency}
                         setIsDragged={setIsDragged}
                         onChange={(event) =>
                           convertCurrencies(
@@ -211,6 +215,9 @@ export default function Converter({ rates }: ConverterProps) {
                           )
                         }
                         onRemove={onRemoveCurrency}
+                        onRemoveShortcut={() =>
+                          setIsDragged(currency.currencyCode, true)
+                        }
                       />
                     </InputContextMenu>
                   ))}

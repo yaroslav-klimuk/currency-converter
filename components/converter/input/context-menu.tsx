@@ -10,6 +10,7 @@ import { Icons } from "@/components/icons"
 
 interface InputContextMenuProps {
   disabled: boolean
+  isDeleteDisabled?: boolean
   onEditModeClick: MouseEventHandler<HTMLDivElement>
   onDeleteClick: MouseEventHandler<HTMLDivElement>
   children: ReactNode
@@ -17,6 +18,7 @@ interface InputContextMenuProps {
 
 const InputContextMenu: FC<InputContextMenuProps> = ({
   disabled,
+  isDeleteDisabled,
   onEditModeClick,
   onDeleteClick,
   children,
@@ -33,6 +35,7 @@ const InputContextMenu: FC<InputContextMenuProps> = ({
           Reorder
         </ContextMenuItem>
         <ContextMenuItem
+          disabled={isDeleteDisabled}
           className="text-destructive focus:text-destructive cursor-pointer p-3 text-base md:px-2 md:py-1.5"
           onClick={onDeleteClick}
         >

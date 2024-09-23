@@ -3,8 +3,10 @@ import {
   FC,
   FocusEventHandler,
   InputHTMLAttributes,
+  KeyboardEventHandler,
   useRef,
 } from "react"
+import Bowser from "bowser"
 
 import { Currency } from "@/types/currency"
 import { cn } from "@/lib/utils"
@@ -15,6 +17,7 @@ interface CurrencyInputProps extends InputHTMLAttributes<HTMLInputElement> {
   currency: Currency
   flagSet: FlagSetsType
   containerClassName?: string
+  onRemoveShortcut?: () => void
 }
 
 const CurrencyInput: FC<CurrencyInputProps> = ({
@@ -23,9 +26,13 @@ const CurrencyInput: FC<CurrencyInputProps> = ({
   containerClassName,
   value,
   onChange,
+  onRemoveShortcut,
   ...props
 }) => {
   const inputRef = useRef<HTMLInputElement>(null)
+
+  const osName = Bowser.getParser(window.navigator.userAgent).getOSName()
+  const isMac = osName === "macOS"
 
   const focusInput = () => {
     if (inputRef.current) {
@@ -52,6 +59,18 @@ const CurrencyInput: FC<CurrencyInputProps> = ({
     }
   }
 
+  const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = (event) => {
+    if (onRemoveShortcut) {
+      if (
+        (isMac && event.key === "Backspace" && event.metaKey) ||
+        (!isMac && event.key === "Backspace" && event.ctrlKey)
+      ) {
+        event.preventDefault()
+        onRemoveShortcut()
+      }
+    }
+  }
+
   return (
     <div
       onClick={focusInput}
@@ -71,6 +90,7 @@ const CurrencyInput: FC<CurrencyInputProps> = ({
           </span>
         </div>
       </div>
+
       <Input
         ref={inputRef}
         value={value}
@@ -80,6 +100,7 @@ const CurrencyInput: FC<CurrencyInputProps> = ({
         aria-label={`${currency.currencyCode} currency input`}
         onFocus={handleFocus}
         onChange={handleChange}
+        onKeyDown={handleKeyDown}
         {...props}
       />
     </div>
