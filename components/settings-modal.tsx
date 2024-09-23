@@ -60,7 +60,7 @@ function ThemeSelect({ resolvedTheme, setTheme }: ThemeSelectProps) {
   return (
     <Select defaultValue={resolvedTheme} onValueChange={setTheme}>
       <span className="sr-only">Toggle theme</span>
-      <SelectTrigger className="w-[60%]">
+      <SelectTrigger className="w-3/5">
         <SelectValue>
           <div className="flex items-center">
             {options[resolvedTheme as keyof typeof options].icon}
@@ -92,7 +92,7 @@ function FlagSetSelect({ flagSet, setFlagSet }: FlagSetSelectProps) {
   return (
     <Select defaultValue={flagSet} onValueChange={setFlagSet}>
       <span className="sr-only">Toggle theme</span>
-      <SelectTrigger className="w-[60%]">
+      <SelectTrigger className="w-3/5">
         <SelectValue>
           <div className="flex items-center">
             <div className="mr-1 flex">
@@ -166,9 +166,10 @@ export default function SettingsModal({
 
           <div className="flex items-center justify-between">
             <span>Theme</span>
-            {resolvedTheme ? (
-              <ThemeSelect resolvedTheme={resolvedTheme} setTheme={setTheme} />
-            ) : null}
+            <ThemeSelect
+              resolvedTheme={resolvedTheme || "light"}
+              setTheme={setTheme}
+            />
           </div>
           <div className="flex items-center justify-between">
             <span>Flag set</span>
@@ -197,9 +198,10 @@ export default function SettingsModal({
         <div className="p-4 pb-3">
           <div className="flex items-center justify-between">
             <span>Theme</span>
-            {resolvedTheme ? (
-              <ThemeSelect resolvedTheme={resolvedTheme} setTheme={setTheme} />
-            ) : null}
+            <ThemeSelect
+              resolvedTheme={resolvedTheme || "light"}
+              setTheme={setTheme}
+            />
           </div>
         </div>
 

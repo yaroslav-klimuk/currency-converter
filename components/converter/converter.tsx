@@ -21,7 +21,7 @@ interface ConverterProps {
   rates: Rate
 }
 
-const defaultCurrecnies: Currency[] = [
+const defaultCurrencies: Currency[] = [
   {
     currencyCode: "USD",
     currencyName: "US Dollar",
@@ -47,7 +47,7 @@ export default function Converter({ rates }: ConverterProps) {
   const [state, setState] = useState<Rate>({} as Rate)
   const [currencies, setCurrencies] = useLocalStorage<Currency[]>(
     "currencies",
-    defaultCurrecnies
+    defaultCurrencies
   )
   const [settings] = useLocalStorage<Settings>("settings", {
     flagSet: "colorful",

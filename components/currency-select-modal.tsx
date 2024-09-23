@@ -61,12 +61,11 @@ export default function CurrencySelectModal({
             <DialogDescription>{DESCRIPTION}</DialogDescription>
           </DialogHeader>
 
-          <div className="max-h-[280px] min-h-32 overflow-y-scroll rounded-md border p-2">
-            <CurrenciesList
-              currencies={sortedCurrencies}
-              onSelectCurrency={setCurrency}
-            />
-          </div>
+          <CurrenciesList
+            className="max-h-[280px]"
+            currencies={sortedCurrencies}
+            onSelectCurrency={setCurrency}
+          />
 
           <DialogFooter>
             <DialogClose asChild>
@@ -86,12 +85,11 @@ export default function CurrencySelectModal({
           <DrawerDescription>{DESCRIPTION}</DrawerDescription>
         </DrawerHeader>
 
-        <div className="mx-4 max-h-[70dvh] min-h-32 overflow-y-scroll rounded-md border p-2">
-          <CurrenciesList
-            currencies={sortedCurrencies}
-            onSelectCurrency={setCurrency}
-          />
-        </div>
+        <CurrenciesList
+          className="mx-4 max-h-[70dvh]"
+          currencies={sortedCurrencies}
+          onSelectCurrency={setCurrency}
+        />
 
         <DrawerFooter className="pt-2">
           <DrawerClose asChild>

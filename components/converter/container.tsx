@@ -18,7 +18,6 @@ export default function Container({
       )}
     >
       {children}
-      <div className="mt-auto border-t p-3"></div>
     </div>
   )
 }
