@@ -1,7 +1,7 @@
 name: Preview
 on:
   workflow_run:
-    workflows: ["Code Check"]
+    workflows: ["Code check"]
     types:
       - completed
 
