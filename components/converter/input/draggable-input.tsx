@@ -1,4 +1,4 @@
-import { FC, KeyboardEventHandler, RefObject, useEffect, useRef } from "react";
+import { FC, KeyboardEventHandler, RefObject, useEffect, useRef } from "react"
 import { motion, MotionProps, PanInfo } from "framer-motion"
 import { useOnClickOutside } from "usehooks-ts"
 
@@ -86,7 +86,7 @@ const DraggableInput: FC<DraggableInputProps> = ({
         transition={{ type: "tween", duration: 0.2 }}
         onAnimationComplete={() => {
           if (isDragged) {
-            deleteButtonRef.current?.focus();
+            deleteButtonRef.current?.focus()
           }
         }}
       >
