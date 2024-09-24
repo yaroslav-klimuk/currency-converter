@@ -53,7 +53,7 @@ const CurrencyInput: FC<CurrencyInputProps> = ({
     let newValue = event.target.value
     newValue = newValue.replace(',', '.')
 
-    if (newValue === "" || /^\d*\.?\d*$/.test(newValue)) {
+    if (newValue === "" || /^\d+\.?\d*$/.test(newValue)) {
       if (onChange) {
         event.target.value = newValue
         onChange(event)
