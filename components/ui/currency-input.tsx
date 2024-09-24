@@ -50,10 +50,12 @@ const CurrencyInput: FC<CurrencyInputProps> = ({
   }
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
-    const newValue = event.target.value
+    let newValue = event.target.value
+    newValue = newValue.replace(',', '.')
 
-    if (newValue === "" || /^\d*\.?\d*$/.test(newValue)) {
+    if (newValue === "" || /^\d+\.?\d*$/.test(newValue)) {
       if (onChange) {
+        event.target.value = newValue
         onChange(event)
       }
     }
@@ -95,7 +97,7 @@ const CurrencyInput: FC<CurrencyInputProps> = ({
         ref={inputRef}
         value={value}
         className="size-auto min-w-3 max-w-[40%] shrink text-ellipsis rounded-none border-none p-0 text-right text-base tabular-nums focus-visible:ring-0 focus-visible:ring-offset-0"
-        inputMode="numeric"
+        inputMode="decimal"
         placeholder="0"
         aria-label={`${currency.currencyCode} currency input`}
         onFocus={handleFocus}
