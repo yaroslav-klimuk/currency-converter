@@ -194,9 +194,7 @@ export default function Converter({ rates }: ConverterProps) {
                       disabled={isEditModeEnabled}
                       isDeleteDisabled={currencies.length <= 2}
                       onEditModeClick={onEnableEditMode}
-                      onDeleteClick={() =>
-                        setIsDragged(currency.currencyCode, true)
-                      }
+                      onDeleteClick={() => onRemoveCurrency(currency)}
                     >
                       <Input
                         showControls={isEditModeEnabled}
@@ -215,9 +213,7 @@ export default function Converter({ rates }: ConverterProps) {
                           )
                         }
                         onRemove={onRemoveCurrency}
-                        onRemoveShortcut={() =>
-                          setIsDragged(currency.currencyCode, true)
-                        }
+                        onRemoveShortcut={onRemoveCurrency}
                       />
                     </InputContextMenu>
                   ))}

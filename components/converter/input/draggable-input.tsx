@@ -36,7 +36,7 @@ const DraggableInput: FC<DraggableInputProps> = ({
   const onRemoveClick = () => {
     if (onRemove) {
       setIsDragged(currency.currencyCode, false)
-      setTimeout(() => onRemove(currency), 70)
+      setTimeout(() => onRemove(currency), 100)
     }
   }
 

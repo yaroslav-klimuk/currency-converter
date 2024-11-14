@@ -17,7 +17,7 @@ interface CurrencyInputProps extends InputHTMLAttributes<HTMLInputElement> {
   currency: Currency
   flagSet: FlagSetsType
   containerClassName?: string
-  onRemoveShortcut?: () => void
+  onRemoveShortcut?: (currency: Currency) => void
 }
 
 const CurrencyInput: FC<CurrencyInputProps> = ({
@@ -51,7 +51,7 @@ const CurrencyInput: FC<CurrencyInputProps> = ({
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     let newValue = event.target.value
-    newValue = newValue.replace(',', '.')
+    newValue = newValue.replace(",", ".")
 
     if (newValue === "" || /^\d+\.?\d*$/.test(newValue)) {
       if (onChange) {
@@ -68,7 +68,7 @@ const CurrencyInput: FC<CurrencyInputProps> = ({
         (!isMac && event.key === "Backspace" && event.ctrlKey)
       ) {
         event.preventDefault()
-        onRemoveShortcut()
+        onRemoveShortcut(currency)
       }
     }
   }
