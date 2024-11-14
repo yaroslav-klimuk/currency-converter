@@ -20,6 +20,7 @@ import {
   DrawerTitle,
 } from "@/components/ui/drawer"
 import { Flag, flagSets, FlagSetsType } from "@/components/ui/flag"
+import { Label } from "@/components/ui/label"
 import {
   Select,
   SelectContent,
@@ -59,8 +60,7 @@ interface ThemeSelectProps {
 function ThemeSelect({ resolvedTheme, setTheme }: ThemeSelectProps) {
   return (
     <Select defaultValue={resolvedTheme} onValueChange={setTheme}>
-      <span className="sr-only">Toggle theme</span>
-      <SelectTrigger className="w-3/5">
+      <SelectTrigger aria-label="Toggle theme" className="w-3/5">
         <SelectValue>
           <div className="flex items-center">
             {options[resolvedTheme as keyof typeof options].icon}
@@ -91,8 +91,7 @@ interface FlagSetSelectProps {
 function FlagSetSelect({ flagSet, setFlagSet }: FlagSetSelectProps) {
   return (
     <Select defaultValue={flagSet} onValueChange={setFlagSet}>
-      <span className="sr-only">Toggle theme</span>
-      <SelectTrigger className="w-3/5">
+      <SelectTrigger aria-label="Toggle theme" className="w-3/5">
         <SelectValue>
           <div className="flex items-center">
             <div className="mr-1 flex">
@@ -161,26 +160,29 @@ export default function SettingsModal({
         <DialogContent onEscapeKeyDown={closeModal} className="max-w-md">
           <DialogHeader>
             <DialogTitle>{TITLE}</DialogTitle>
-            <DialogClose onClick={closeModal} />
+            <DialogClose aria-label="Close" onClick={closeModal} />
           </DialogHeader>
 
-          <div className="flex items-center justify-between">
-            <span>Theme</span>
+          <Label className="flex items-center justify-between">
+            Theme
             <ThemeSelect
               resolvedTheme={resolvedTheme || "light"}
               setTheme={setTheme}
             />
-          </div>
-          <div className="flex items-center justify-between">
-            <span>Flag set</span>
+          </Label>
+
+          <Label className="flex items-center justify-between">
+            Flag set
             <FlagSetSelect
               flagSet={settings.flagSet}
               setFlagSet={onFlagSetChange}
             />
-          </div>
+          </Label>
 
           <DialogFooter>
-            <Button onClick={closeModal}>Close</Button>
+            <Button aria-label="Close" onClick={closeModal}>
+              Close
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
@@ -192,31 +194,33 @@ export default function SettingsModal({
       <DrawerContent>
         <DrawerHeader>
           <DrawerTitle>{TITLE}</DrawerTitle>
-          <DrawerClose onClick={closeModal} />
+          <DrawerClose aria-label="Close" onClick={closeModal} />
         </DrawerHeader>
 
         <div className="p-4 pb-3">
-          <div className="flex items-center justify-between">
-            <span>Theme</span>
+          <Label className="flex items-center justify-between">
+            Theme
             <ThemeSelect
               resolvedTheme={resolvedTheme || "light"}
               setTheme={setTheme}
             />
-          </div>
+          </Label>
         </div>
 
         <div className="px-4 pb-4">
-          <div className="flex items-center justify-between">
-            <span>Flag set</span>
+          <Label className="flex items-center justify-between">
+            Flag set
             <FlagSetSelect
               flagSet={settings.flagSet}
               setFlagSet={onFlagSetChange}
             />
-          </div>
+          </Label>
         </div>
 
         <DrawerFooter>
-          <Button onClick={closeModal}>Close</Button>
+          <Button aria-label="Close" onClick={closeModal}>
+            Close
+          </Button>
         </DrawerFooter>
       </DrawerContent>
     </Drawer>

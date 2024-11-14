@@ -69,7 +69,9 @@ export default function CurrencySelectModal({
 
           <DialogFooter>
             <DialogClose asChild>
-              <Button variant="outline">Cancel</Button>
+              <Button aria-label="Cancel" variant="outline">
+                Cancel
+              </Button>
             </DialogClose>
           </DialogFooter>
         </DialogContent>
@@ -93,7 +95,9 @@ export default function CurrencySelectModal({
 
         <DrawerFooter className="pt-2">
           <DrawerClose asChild>
-            <Button variant="outline">Cancel</Button>
+            <Button aria-label="Cancel" variant="outline">
+              Cancel
+            </Button>
           </DrawerClose>
         </DrawerFooter>
       </DrawerContent>

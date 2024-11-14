@@ -136,6 +136,7 @@ export default function Converter({ rates }: ConverterProps) {
               size="icon"
               variant="outline"
               className="size-8"
+              aria-label="Settings"
               onClick={onOpenSettingsModal}
             >
               <Icons.settings size={20} />
@@ -145,6 +146,7 @@ export default function Converter({ rates }: ConverterProps) {
             <Button
               variant="outline"
               className="h-8 px-2"
+              aria-label="Done"
               onClick={onDisableEditMode}
             >
               <Icons.check size={18} className="mr-1" />
@@ -155,6 +157,7 @@ export default function Converter({ rates }: ConverterProps) {
               variant="outline"
               className="h-8 px-2"
               disabled={availableCurrencies.length === 0}
+              aria-label="Add currency"
               onClick={onOpenCurrenciesList}
             >
               <Icons.plus size={18} className="mr-1" />
