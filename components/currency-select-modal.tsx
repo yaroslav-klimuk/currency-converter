@@ -24,7 +24,7 @@ import {
 
 interface CurrencySelectModalProps {
   isOpen: boolean
-  onOpenChange: (isOpen: boolean) => void
+  onOpenChange: (open: boolean) => void
   currencies: Currency[]
   setCurrency: (currency: Currency) => void
 }

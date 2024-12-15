@@ -60,6 +60,8 @@ export default function Converter({ rates }: ConverterProps) {
   const [isEditModeEnabled, setIsEditModeEnabled] = useState(false)
 
   const listRef = useRef<HTMLDivElement>(null)
+  const addButtonRef = useRef<HTMLButtonElement | null>(null)
+  const settingsButtonRef = useRef<HTMLButtonElement | null>(null)
 
   const availableCurrencies = supportedCurrencies.filter((currency) => {
     return !currencies.some(
@@ -102,6 +104,7 @@ export default function Converter({ rates }: ConverterProps) {
   const onSelectCurrency = (currency: Currency) => {
     setIsCurrenciesListOpen(false)
     setTimeout(() => setCurrencies((prev) => [...prev, currency]), 200)
+    setTimeout(() => addButtonRef.current?.focus(), 100)
   }
 
   const onOpenCurrenciesList = () => setIsCurrenciesListOpen(true)
@@ -127,12 +130,33 @@ export default function Converter({ rates }: ConverterProps) {
     }
   }
 
+  const onCurrencySelectModalOpenChange = (open: boolean) => {
+    if (!open) {
+      setTimeout(() => {
+        addButtonRef.current?.focus()
+      }, 100)
+    }
+
+    setIsCurrenciesListOpen(open)
+  }
+
+  const onSettingsModalOpenChange = (open: boolean) => {
+    if (!open) {
+      setTimeout(() => {
+        settingsButtonRef.current?.focus()
+      }, 100)
+    }
+
+    setIsSettingsModalOpen(open)
+  }
+
   return (
     <>
       <Container>
         <div className="flex items-center justify-between border-b p-3">
           <div className="flex">
             <Button
+              ref={settingsButtonRef}
               size="icon"
               variant="outline"
               className="size-8"
@@ -154,6 +178,7 @@ export default function Converter({ rates }: ConverterProps) {
             </Button>
           ) : (
             <Button
+              ref={addButtonRef}
               variant="outline"
               className="h-8 px-2"
               disabled={availableCurrencies.length === 0}
@@ -229,14 +254,14 @@ export default function Converter({ rates }: ConverterProps) {
 
       <CurrencySelectModal
         isOpen={isCurrenciesListOpen}
-        onOpenChange={setIsCurrenciesListOpen}
+        onOpenChange={onCurrencySelectModalOpenChange}
         currencies={availableCurrencies}
         setCurrency={onSelectCurrency}
       />
 
       <SettingsModal
         isOpen={isSettingsModalOpen}
-        onOpenChange={setIsSettingsModalOpen}
+        onOpenChange={onSettingsModalOpenChange}
       />
     </>
   )
