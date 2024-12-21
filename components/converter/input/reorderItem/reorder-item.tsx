@@ -1,6 +1,7 @@
 import { ReactNode, RefObject } from "react"
 import {
   AnimatePresence,
+  DraggableProps,
   motion,
   Reorder,
   useDragControls,
@@ -13,7 +14,7 @@ import { buttonVariants, itemVariants } from "./variants"
 
 export interface ReorderItemProps<T> {
   value: T
-  dragConstraints: RefObject<HTMLElement>
+  dragConstraints: DraggableProps["dragConstraints"]
   showControls: boolean
   children: ReactNode
 }

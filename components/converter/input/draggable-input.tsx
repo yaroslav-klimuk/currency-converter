@@ -13,7 +13,6 @@ import { Icons } from "@/components/icons"
 interface DraggableInputProps extends CurrencyInputProps {
   draggable: boolean
   isDragged: boolean
-  dragConstraints?: RefObject<HTMLElement>
   motionProps?: MotionProps
   onRemove?: (currency: Currency) => void
   setIsDragged: (currencyCode: CurrencyCode, isDragged: boolean) => void
@@ -23,14 +22,13 @@ const DraggableInput: FC<DraggableInputProps> = ({
   draggable,
   isDragged,
   currency,
-  dragConstraints,
   disabled,
   motionProps,
   onRemove,
   setIsDragged,
   ...props
 }) => {
-  const ref = useRef(null)
+  const ref = useRef<HTMLDivElement>(null)
   const deleteButtonRef = useRef<HTMLButtonElement>(null)
 
   const onRemoveClick = () => {
@@ -65,6 +63,7 @@ const DraggableInput: FC<DraggableInputProps> = ({
     }
   }, [isDragged])
 
+  // @ts-expect-error
   useOnClickOutside(ref, handleOutsideClick)
 
   return (
