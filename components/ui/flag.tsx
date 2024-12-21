@@ -56,7 +56,7 @@ export function Flag({
           `rounded-full border ${isLoaded ? "opacity-100" : "opacity-0"}`,
           flagClassName
         )}
-        onLoadingComplete={() => setIsLoaded(true)}
+        onLoad={() => setIsLoaded(true)}
       />
     </div>
   )
