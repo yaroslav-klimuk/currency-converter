@@ -1,8 +1,8 @@
 import "@/styles/globals.css"
 
+import { ReactNode } from "react"
 import { Metadata } from "next"
-import { GeistMono } from "geist/font/mono"
-import { GeistSans } from "geist/font/sans"
+import { Geist, Geist_Mono } from "next/font/google"
 import { SkeletonTheme } from "react-loading-skeleton"
 
 import "react-loading-skeleton/dist/skeleton.css"
@@ -19,48 +19,55 @@ export const metadata: Metadata = {
     default: siteConfig.name,
     template: `%s - ${siteConfig.name}`,
   },
+
   description: siteConfig.description,
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "hsl(0 0% 100%)" },
-    { media: "(prefers-color-scheme: dark)", color: "hsl(240 10% 3.9%)" },
-  ],
-  viewport: "width=device-width, initial-scale=1, maximum-scale=1",
-  icons: {
-    icon: [
-      { url: "/icons/favicon-16x16.png", sizes: "16x16", type: "image/png" },
-      { url: "/icons/favicon-32x32.png", sizes: "32x32", type: "image/png" },
-    ],
-    shortcut: "/icons/favicon.ico",
-    apple: [{ url: "/icons/apple-touch-icon.png" }],
-    other: [
-      {
-        rel: "mask-icon",
-        url: "/icons/safari-pinned-tab.svg",
-        // @ts-ignore
-        color: "#fff",
-      },
-    ],
-  },
+
   appleWebApp: {
     title: siteConfig.shortName,
   },
-  manifest: "/manifest.json",
 }
 
+const geist = Geist({
+  subsets: ["latin"],
+  variable: "--font-geist-sans",
+  fallback: [
+    "Inter",
+    "-apple-system",
+    "BlinkMacSystemFont",
+    "Segoe UI",
+    "Roboto",
+    "Helvetica Neue",
+    "Arial",
+    "sans-serif",
+  ],
+})
+
+const geistMono = Geist_Mono({
+  subsets: ["latin"],
+  variable: "--font-geist-mono",
+  fallback: [
+    "Menlo",
+    "Monaco",
+    "Lucida Console",
+    '"Liberation Mono"',
+    '"Courier New"',
+    "monospace",
+  ],
+})
+
 interface RootLayoutProps {
-  children: React.ReactNode
+  children: ReactNode
 }
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <>
       <html lang="en" suppressHydrationWarning>
-        <head />
         <body
           className={cn(
-            "bg-background min-h-screen font-sans antialiased transition-colors duration-300",
-            GeistSans.variable,
-            GeistMono.variable
+            "bg-muted min-h-dvh font-sans antialiased transition-colors duration-300",
+            geist.variable,
+            geistMono.variable
           )}
         >
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
@@ -68,7 +75,10 @@ export default function RootLayout({ children }: RootLayoutProps) {
               baseColor="hsl(var(--skeleton-bg))"
               highlightColor="hsl(var(--skeleton-highlight))"
             >
-              <div className="relative flex min-h-screen flex-col">
+              <div
+                vaul-drawer-wrapper=""
+                className="bg-muted relative flex min-h-dvh flex-col rounded-md"
+              >
                 <SiteHeader />
                 <div className="flex-1">{children}</div>
                 <SiteFooter />

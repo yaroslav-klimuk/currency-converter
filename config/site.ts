@@ -5,8 +5,7 @@ export const siteConfig = {
   shortName: "Converter",
   description: "Currency converter",
   links: {
-    twitter: "https://twitter.com/yaroslav_klimuk",
-    github: "https://github.com/yaroslav-klimuk",
-    docs: "https://ui.shadcn.com",
+    github: "https://github.com/yaroslav-klimuk/currency-converter",
+    shadcn: "https://ui.shadcn.com",
   },
 }

@@ -1,11 +1,13 @@
-import countriesCodes from "@/helpers/countriesCodes.json"
+import currencies from "@/helpers/currencies"
 
 import { Rate, RatesData, RatesResponse } from "@/types/currency"
 
 export const fetchRates = async (): Promise<RatesData> => {
-  const currencies = Object.keys(countriesCodes).join(",")
+  const currenciesCodes = currencies
+    .map(({ currencyCode }) => currencyCode)
+    .join(",")
   const response = await fetch(
-    `https://api.currencyapi.com/v3/latest?currencies=${currencies}`,
+    `https://api.currencyapi.com/v3/latest?currencies=${currenciesCodes}`,
     {
       headers: {
         apiKey: process.env.CURRENCY_API_KEY!,
