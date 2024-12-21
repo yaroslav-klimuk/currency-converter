@@ -36,6 +36,8 @@
 
     --radius: 0.5rem;
 
+    --kbd: 0 0% 88%;
+
     --skeleton-bg: 0 0% 95%;
     --skeleton-highlight: 0 0% 98%;
   }
@@ -70,6 +72,8 @@
     --input: 240 3.7% 15.9%;
 
     --ring: 240 4.9% 83.9%;
+
+    --kbd: 0 0% 32%;
 
     --skeleton-bg: 0 0% 20%;
     --skeleton-highlight: 0 0% 15%;

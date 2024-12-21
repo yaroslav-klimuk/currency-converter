@@ -56,6 +56,13 @@ const config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        skeleton: {
+          DEFAULT: "hsl(var(--skeleton))",
+          highlight: "hsl(var(--skeleton-highlight))",
+        },
+        kbd: {
+          DEFAULT: "hsl(var(--kbd))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",

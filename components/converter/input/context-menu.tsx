@@ -7,6 +7,7 @@ import {
   ContextMenuItem,
   ContextMenuTrigger,
 } from "@/components/ui/context-menu"
+import KBD from "@/components/ui/KBD"
 import { Icons } from "@/components/icons"
 
 interface InputContextMenuProps {
@@ -50,12 +51,8 @@ const InputContextMenu: FC<InputContextMenuProps> = ({
             Delete
           </span>
           <div className="ml-auto flex gap-0.5">
-            <kbd className="text-foreground inline-flex h-5 min-w-5 shrink-0 select-none items-center justify-center whitespace-nowrap rounded-sm bg-neutral-200 p-1 font-sans text-xs">
-              {isMac ? "⌘" : "CTRL"}{" "}
-            </kbd>
-            <kbd className="text-foreground inline-flex size-5 h-5 min-w-5 shrink-0 select-none items-center justify-center whitespace-nowrap rounded-sm bg-neutral-200 p-1 font-sans text-xs">
-              ⌫
-            </kbd>
+            <KBD>{isMac ? "⌘" : "CTRL"}</KBD>
+            <KBD>⌫</KBD>
           </div>
         </ContextMenuItem>
       </ContextMenuContent>
