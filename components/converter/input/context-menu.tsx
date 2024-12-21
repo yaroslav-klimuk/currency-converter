@@ -25,7 +25,9 @@ const InputContextMenu: FC<InputContextMenuProps> = ({
   onDeleteClick,
   children,
 }) => {
-  const osName = Bowser.getParser(window.navigator.userAgent).getOSName()
+  const parser = Bowser.getParser(window.navigator.userAgent)
+  const isDesktop = parser.getPlatformType() === "desktop"
+  const osName = parser.getOSName()
   const isMac = osName === "macOS"
 
   return (
@@ -50,10 +52,12 @@ const InputContextMenu: FC<InputContextMenuProps> = ({
             <Icons.trash size={16} />
             Delete
           </span>
-          <div className="ml-auto flex gap-0.5">
-            <KBD>{isMac ? "⌘" : "CTRL"}</KBD>
-            <KBD>⌫</KBD>
-          </div>
+          {isDesktop ? (
+            <div className="ml-auto flex gap-0.5">
+              <KBD>{isMac ? "⌘" : "CTRL"}</KBD>
+              <KBD>⌫</KBD>
+            </div>
+          ) : null}
         </ContextMenuItem>
       </ContextMenuContent>
     </ContextMenu>
