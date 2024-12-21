@@ -1,7 +1,7 @@
 import "@/styles/globals.css"
 
 import { ReactNode } from "react"
-import { Metadata } from "next"
+import { Metadata, Viewport } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
 import { SkeletonTheme } from "react-loading-skeleton"
 
@@ -25,6 +25,13 @@ export const metadata: Metadata = {
   appleWebApp: {
     title: siteConfig.shortName,
   },
+}
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "hsl(0, 0%, 100%)" },
+    { media: "(prefers-color-scheme: dark)", color: "hsl(0, 0%, 7%)" },
+  ],
 }
 
 const geist = Geist({

@@ -2,6 +2,8 @@
     "name": "Currency converter",
     "short_name": "Converter",
     "start_url": "/",
+    "display": "standalone",
+    "background_color": "hsl(0 0% 7%)",
     "icons": [
         {
             "src": "/icons/icon-192.png",
@@ -13,8 +15,5 @@
             "sizes": "512x512",
             "type": "image/png"
         }
-    ],
-    "theme_color": "hsl(0 0% 100%)",
-    "background_color": "hsl(0 0% 100%)",
-    "display": "standalone"
+    ]
 }
