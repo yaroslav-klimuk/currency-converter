@@ -14,7 +14,7 @@ export const flagSets: Record<FlagSetsType, string> = {
 }
 
 export interface FlagProps {
-  countryCode: string
+  countryCode?: string
   flagSet?: FlagSetsType
   size?: number
   className?: string
@@ -35,29 +35,32 @@ export function Flag({
       className={cn("flex", className)}
       style={{ width: `${size}px`, height: `${size}px` }}
     >
-      {!isLoaded && (
+      {!isLoaded ? (
         <Skeleton
           circle
           width={`${size}px`}
           height={`${size}px`}
           containerClassName={cn("flex items-center")}
         />
-      )}
-      <Image
-        src={flagSets[flagSet] + countryCode.toLowerCase() + ".svg"}
-        alt={countryCode}
-        width={size}
-        height={size}
-        style={{
-          width: `${size}px`,
-          height: `${size}px`,
-        }}
-        className={cn(
-          `rounded-full border ${isLoaded ? "opacity-100" : "opacity-0"}`,
-          flagClassName
-        )}
-        onLoad={() => setIsLoaded(true)}
-      />
+      ) : null}
+
+      {countryCode ? (
+        <Image
+          src={flagSets[flagSet] + countryCode.toLowerCase() + ".svg"}
+          alt={countryCode}
+          width={size}
+          height={size}
+          style={{
+            width: `${size}px`,
+            height: `${size}px`,
+          }}
+          className={cn(
+            `rounded-full border ${isLoaded ? "opacity-100" : "opacity-0"}`,
+            flagClassName
+          )}
+          onLoad={() => setIsLoaded(true)}
+        />
+      ) : null}
     </div>
   )
 }
