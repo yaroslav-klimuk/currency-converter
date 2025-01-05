@@ -9,8 +9,6 @@ import "react-loading-skeleton/dist/skeleton.css"
 
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
-import { SiteFooter } from "@/components/site-footer"
-import { SiteHeader } from "@/components/site-header"
 import { TailwindIndicator } from "@/components/tailwind-indicator"
 import { ThemeProvider } from "@/components/theme-provider"
 
@@ -28,9 +26,10 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
+  viewportFit: "cover",
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "hsl(0, 0%, 100%)" },
-    { media: "(prefers-color-scheme: dark)", color: "hsl(0, 0%, 7%)" },
+    { media: "(prefers-color-scheme: light)", color: "hsl(240 4.8% 95.9%)" },
+    { media: "(prefers-color-scheme: dark)", color: "hsl(0, 0%, 11%)" },
   ],
 }
 
@@ -86,9 +85,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
                 vaul-drawer-wrapper=""
                 className="bg-muted relative flex min-h-dvh flex-col rounded-md"
               >
-                <SiteHeader />
                 <div className="flex-1">{children}</div>
-                <SiteFooter />
               </div>
               <TailwindIndicator />
             </SkeletonTheme>
