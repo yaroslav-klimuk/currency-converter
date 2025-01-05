@@ -64,8 +64,11 @@ const CurrencyInput: FC<CurrencyInputProps> = ({
   const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = (event) => {
     if (onRemoveShortcut) {
       if (
-        (isMac && event.key === "Backspace" && event.metaKey) ||
-        (!isMac && event.key === "Backspace" && event.ctrlKey)
+        (isMac &&
+          event.key === "Backspace" &&
+          event.metaKey &&
+          event.shiftKey) ||
+        (!isMac && event.key === "Backspace" && event.ctrlKey && event.shiftKey)
       ) {
         event.preventDefault()
         onRemoveShortcut(currency)
