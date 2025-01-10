@@ -9,7 +9,8 @@ jobs:
     outputs:
       should_skip: ${{ steps.skip_check.outputs.should_skip }}
     steps:
-      - name: Skip check
+      - id: skip_check
+        name: Skip check
         uses: fkirc/skip-duplicate-actions@v5
         with:
           do_not_skip: '["workflow_dispatch"]'
@@ -19,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     name: ESLint
     needs: pre-job
-    if: ${{ !fromJSON(needs.pre_job.outputs.should_skip) }}
+    if: needs.pre_job.outputs.should_skip != 'true'
     steps:
       - uses: actions/checkout@v4
         with:
