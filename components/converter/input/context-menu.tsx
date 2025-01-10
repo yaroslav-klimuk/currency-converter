@@ -55,7 +55,7 @@ const InputContextMenu: FC<InputContextMenuProps> = ({
           {isDesktop ? (
             <div className="ml-auto flex gap-1">
               <KBD>{isMac ? "⌘" : "CTRL"}</KBD>
-              <KBD>Shift</KBD>
+              <KBD>SHIFT</KBD>
               <KBD>⌫</KBD>
             </div>
           ) : null}
