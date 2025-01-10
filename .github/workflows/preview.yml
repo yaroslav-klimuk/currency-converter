@@ -2,7 +2,7 @@ name: Preview
 on:
   workflow_dispatch:
   workflow_run:
-    workflows: ["code-check"]
+    workflows: ["Code check"]
     types:
       - completed
 env:
