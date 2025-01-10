@@ -1,7 +1,7 @@
 name: Code check
 on: [push, pull_request, workflow_dispatch]
 jobs:
-  pre-job:
+  pre_job:
     runs-on: ubuntu-latest
     permissions:
       actions: write
@@ -18,7 +18,7 @@ jobs:
           concurrent_skipping: "same_content"
   lint:
     runs-on: ubuntu-latest
-    name: ESLint
+    name: ESLintg
     needs: pre_job
     if: needs.pre_job.outputs.should_skip != 'true'
     steps:
