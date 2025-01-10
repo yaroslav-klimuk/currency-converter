@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     name: ESLint
     needs: pre-job
-    if: needs.pre_job.outputs.should_skip != 'true'
+    if: ${{ !fromJSON(needs.pre_job.outputs.should_skip) }}
     steps:
       - uses: actions/checkout@v4
         with:
