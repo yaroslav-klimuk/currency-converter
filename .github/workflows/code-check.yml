@@ -19,7 +19,7 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     name: ESLint
-    needs: pre-job
+    needs: pre_job
     if: needs.pre_job.outputs.should_skip != 'true'
     steps:
       - uses: actions/checkout@v4
