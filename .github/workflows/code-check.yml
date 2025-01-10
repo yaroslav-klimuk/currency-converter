@@ -3,6 +3,9 @@ on: [push, pull_request, workflow_dispatch]
 jobs:
   pre-job:
     runs-on: ubuntu-latest
+    permissions:
+      actions: write
+      contents: read
     steps:
       - name: Skip check
         uses: fkirc/skip-duplicate-actions@v5
@@ -13,6 +16,7 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     name: ESLint
+    needs: pre-job
     steps:
       - uses: actions/checkout@v4
         with:
