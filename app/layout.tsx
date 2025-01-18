@@ -3,6 +3,7 @@ import "@/styles/globals.css"
 import { ReactNode } from "react"
 import { Metadata, Viewport } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
+import { ThemeProvider } from "next-themes"
 import { SkeletonTheme } from "react-loading-skeleton"
 
 import "react-loading-skeleton/dist/skeleton.css"
@@ -10,7 +11,6 @@ import "react-loading-skeleton/dist/skeleton.css"
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
 import { TailwindIndicator } from "@/components/tailwind-indicator"
-import { ThemeProvider } from "@/components/theme-provider"
 
 export const metadata: Metadata = {
   title: {
